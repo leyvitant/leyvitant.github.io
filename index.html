@@ -30,7 +30,7 @@
     --maxw:1180px;
     --shadow:0 30px 70px -30px rgba(0,0,0,.85);
   }
- 
+
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
@@ -56,13 +56,13 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:1}
- 
+
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
   ::selection{background:var(--red);color:#fff}
- 
+
   h1,h2,h3,.brand-name,.eyebrow,.tab,.btn,.stat-num,.block-title,.day-tag,.deal-price{font-family:'Unbounded',sans-serif}
- 
+
   /* ============ NAV ============ */
   header.nav{
     position:sticky;top:0;z-index:60;
@@ -71,7 +71,7 @@
   }
   .nav-inner{
     max-width:var(--maxw);margin:0 auto;padding:14px 24px;
-    display:flex;align-items:center;gap:20px;
+    display:flex;align-items:center;gap:14px;
   }
   .brand{display:flex;align-items:center;gap:13px;flex-shrink:0}
   .brand-logo{height:46px;width:auto;filter:drop-shadow(0 4px 14px rgba(255,46,62,.5))}
@@ -84,7 +84,7 @@
   .brand-name{font-weight:800;font-size:1.02rem;letter-spacing:.5px}
   .brand-name b{color:var(--red)}
   .brand-sub{font-size:.66rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:4px;font-family:'Sora'}
- 
+
   .tabs{display:flex;gap:6px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{
@@ -111,7 +111,7 @@
   }
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(255,46,62,1)}
   .nav-cta svg{width:15px;height:15px}
- 
+
   /* ============ HERO ============ */
   .hero{
     position:relative;overflow:hidden;
@@ -163,7 +163,7 @@
   .btn-primary:hover svg{transform:translateX(4px)}
   .btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border-strong)}
   .btn-ghost:hover{background:rgba(255,255,255,.12);transform:translateY(-3px)}
- 
+
   .hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
   .chip{
     display:flex;align-items:center;gap:10px;padding:13px 18px;border-radius:14px;
@@ -171,7 +171,7 @@
   }
   .chip b{color:var(--ink);font-family:'Unbounded';font-weight:700}
   .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
- 
+
   /* ============ MARQUEE ============ */
   .marquee{
     border-bottom:1px solid var(--border);overflow:hidden;
@@ -182,19 +182,19 @@
   .marquee-track span{font-family:'Unbounded';font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--ink);opacity:.85;display:inline-flex;align-items:center;gap:34px}
   .marquee-track span::after{content:"●";color:var(--red);font-size:.6rem}
   @keyframes scroll{to{transform:translateX(-50%)}}
- 
+
   /* ============ PANELS ============ */
   #panels{scroll-margin-top:90px;padding:clamp(56px,8vw,96px) 0;position:relative}
   .panel{display:none}
   .panel.active{display:block;animation:panelIn .8s cubic-bezier(.16,1,.3,1) both}
   @keyframes panelIn{from{opacity:0;transform:translateY(20px) scale(.992);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
- 
+
   /* luxe light sweep on tab change */
   .panel-sheen{position:absolute;inset:0;z-index:5;overflow:hidden;pointer-events:none}
   .sheen-bar{position:absolute;top:-20%;left:0;width:45%;height:140%;opacity:0;filter:blur(5px);
     background:linear-gradient(105deg,transparent,rgba(255,221,146,.16) 45%,rgba(255,138,47,.09) 60%,transparent);
     transform:skewX(-16deg) translateX(-260%)}
- 
+
   /* luxe title reveal */
   .panel.active .section-head h2{animation:titleWipe .95s cubic-bezier(.16,1,.3,1) both}
   @keyframes titleWipe{from{clip-path:inset(0 100% 0 0);opacity:0;letter-spacing:3px}to{clip-path:inset(0 0 0 0);opacity:1;letter-spacing:-.5px}}
@@ -206,17 +206,17 @@
   .panel.active .reveal:nth-child(6){animation-delay:.30s}
   .panel.active .reveal:nth-child(7){animation-delay:.36s}
   @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
- 
+
   .section-head{max-width:680px;margin-bottom:46px}
   .kicker{font-size:.74rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:16px;display:inline-block;font-family:'Unbounded'}
   .kicker.m{color:var(--red)} .kicker.c{color:var(--ember)} .kicker.a{color:var(--gold)} .kicker.v{color:var(--red)}
   .section-head h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.02;letter-spacing:-.5px}
   .section-head p{color:var(--muted);font-size:1.05rem;margin-top:18px}
- 
+
   .block-title{font-weight:800;font-size:clamp(1.3rem,2.6vw,1.85rem);margin:56px 0 26px;display:flex;align-items:center;gap:14px;letter-spacing:-.3px}
   .block-title::before{content:"";width:34px;height:5px;border-radius:5px;background:var(--grad);flex-shrink:0}
   .block-title.first{margin-top:6px}
- 
+
   /* feature rows */
   .feature{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;margin-bottom:64px}
   .feature:nth-child(even){grid-template-columns:1fr 1.05fr}
@@ -243,7 +243,7 @@
   .price-pill{display:inline-flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
   .price-pill span{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:10px 15px;font-size:.85rem;color:var(--ink)}
   .price-pill span b{font-family:'Unbounded';color:var(--gold-soft)}
- 
+
   /* card grid */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
   .card{
@@ -264,7 +264,7 @@
   .card-link{display:inline-flex;align-items:center;gap:8px;color:var(--gold-soft);font-weight:600;font-size:.85rem;cursor:pointer;margin-top:auto}
   .card-link svg{width:15px;height:15px;transition:.25s}
   .card:hover .card-link svg{transform:translateX(4px)}
- 
+
   /* promo / deal card */
   .card.promo{border-top:1px solid var(--border)}
   .day-tag{
@@ -277,12 +277,12 @@
   .deal-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px;border-top:1px solid var(--border)}
   .deal-price{font-weight:800;font-size:1.45rem;line-height:1.05;color:var(--gold-soft)}
   .deal-price small{display:block;font-family:'Sora';font-weight:400;font-size:.68rem;color:var(--muted-2);letter-spacing:.3px;margin-top:5px}
- 
+
   .badge-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:48px;padding:24px;border:1px dashed var(--border-strong);border-radius:var(--radius);background:var(--surface);align-items:center}
   .badge-row .bi{display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--ink)}
   .badge-row .bi svg{width:26px;height:26px;color:var(--gold)}
   .badge-row .bi b{font-family:'Unbounded';font-weight:700}
- 
+
   /* ============ TARIFS BOWLING (grille) ============ */
   .price-block{margin:6px 0 60px}
   .price-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch}
@@ -304,7 +304,7 @@
   .price-legend .lg b{font-family:'Unbounded'}
   .price-notes{margin-top:16px;font-size:.8rem;color:var(--muted);line-height:1.7}
   .price-notes b{color:var(--ink);font-weight:600}
- 
+
   /* ============ ANNIVERSAIRES ============ */
   .anniv-incl{list-style:none;display:grid;gap:9px;margin:2px 0 0}
   .anniv-incl li{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--ink)}
@@ -318,7 +318,7 @@
   .anniv-cta .perk{display:inline-flex;align-items:center;gap:10px;font-size:.92rem;color:var(--ink)}
   .anniv-cta .perk svg{width:21px;height:21px;color:var(--gold);flex-shrink:0}
   .anniv-cta .perk b{font-weight:700;color:#fff}
- 
+
   /* ============ CONTACT ============ */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
   .info-stack{display:grid;gap:16px}
@@ -329,7 +329,7 @@
   .info-card .label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px}
   .info-card .val{font-weight:600;font-size:1rem;line-height:1.45}
   .info-card .val a:hover{color:var(--gold-soft)}
- 
+
   .hours{padding:24px;border-radius:18px;background:var(--surface);border:1px solid var(--border)}
   .hours h4{font-family:'Unbounded';font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:10px}
   .hours h4 svg{width:18px;height:18px;color:var(--gold)}
@@ -339,7 +339,7 @@
   .hours li span:first-child{color:var(--muted)}
   .hours li span:last-child{font-weight:600;color:var(--ink)}
   .hours .note{font-size:.78rem;color:var(--muted-2);margin-top:12px;font-style:italic}
- 
+
   .form-card{padding:30px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border)}
   .form-card h3{font-family:'Unbounded';font-size:1.3rem;margin-bottom:6px}
   .form-card .sub{color:var(--muted);font-size:.9rem;margin-bottom:24px}
@@ -353,10 +353,10 @@
   .field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
   .form-card .btn{width:100%;justify-content:center;margin-top:6px}
   .form-note{font-size:.74rem;color:var(--muted-2);text-align:center;margin-top:14px}
- 
+
   .map-wrap{margin-top:34px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);position:relative}
   .map-wrap iframe{width:100%;height:380px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
- 
+
   /* ============ FOOTER ============ */
   footer{border-top:1px solid var(--border);padding:60px 0 36px;margin-top:40px;position:relative;z-index:1;background:linear-gradient(180deg,transparent,rgba(255,46,62,.05))}
   .foot-top{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:40px}
@@ -374,7 +374,7 @@
   .foot-bottom{padding-top:26px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
   .foot-bottom p{font-size:.78rem;color:var(--muted-2)}
   .legal{font-size:.72rem;color:var(--muted-2);line-height:1.6;margin-top:6px;max-width:760px}
- 
+
   /* ============ RESPONSIVE ============ */
   @media(max-width:900px){
     .nav-cta .lbl{display:none}
@@ -400,7 +400,7 @@
 </style>
 </head>
 <body>
- 
+
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="nav-inner">
@@ -412,7 +412,7 @@
         <span class="brand-sub">Granville</span>
       </div>
     </a>
- 
+
     <nav class="tabs" role="tablist" aria-label="Navigation principale">
       <button class="tab" role="tab" aria-selected="true" data-tab="activites" onclick="showTab('activites')">Activités</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="bar" onclick="showTab('bar')">Bar &amp; Restauration</button>
@@ -420,14 +420,14 @@
       <button class="tab" role="tab" aria-selected="false" data-tab="anniv" onclick="showTab('anniv')">Anniversaires</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="contact" onclick="showTab('contact')">Contact</button>
     </nav>
- 
+
     <a class="nav-cta" href="tel:+33233917677">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       <span class="lbl">02 33 91 76 77</span>
     </a>
   </div>
 </header>
- 
+
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
   <div class="hero-bg"></div>
@@ -453,7 +453,7 @@
     </div>
   </div>
 </section>
- 
+
 <!-- ============ MARQUEE ============ -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
@@ -461,12 +461,12 @@
     <span>BOWLING</span><span>LASER GAME</span><span>ANNIVERSAIRES</span><span>BILLARD ANGLAIS</span><span>BRASSERIE</span><span>BONS PLANS</span><span>SOIRÉES</span>
   </div>
 </div>
- 
+
 <!-- ============ PANELS ============ -->
 <main id="panels">
   <div class="panel-sheen" aria-hidden="true"><span class="sheen-bar"></span></div>
   <div class="wrap">
- 
+
     <!-- ===== ACTIVITÉS ===== -->
     <section class="panel active" id="activites" role="tabpanel">
       <div class="section-head reveal">
@@ -474,7 +474,7 @@
         <h2>De quoi vibrer à chaque visite</h2>
         <p>Un complexe de jeux dernière génération, pensé pour tous les âges et tous les niveaux. Choisissez votre terrain.</p>
       </div>
- 
+
       <div class="feature reveal">
         <div class="feature-body">
           <h3><em>Bowling</em> — 8 pistes pour tous les niveaux</h3>
@@ -492,7 +492,7 @@
           <img src="https://boulesetbilles.fun/wp-content/uploads/2018/11/salle-de-bowling-et-jeux.jpg" alt="Salle de bowling de Granville : pistes et panneaux de pistes" loading="lazy" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2018/11/2-1024x498.jpg'">
         </div>
       </div>
- 
+
       <div class="feature reveal">
         <div class="feature-body">
           <h3><em>Laser Game</em> — l'immersion dernière génération</h3>
@@ -510,7 +510,7 @@
           <img src="https://boulesetbilles.fun/wp-content/uploads/2024/02/laser-game-normandie.jpg" alt="Salle de laser game dernière génération à Granville" loading="lazy" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2024/06/laser-game-de-granville.jpg'">
         </div>
       </div>
- 
+
       <div class="price-block reveal">
         <h3 class="block-title">Tarifs bowling</h3>
         <div class="price-wrap">
@@ -540,7 +540,7 @@
         <p class="price-notes"><b>Location de chaussures : 1&nbsp;€.</b> Prix d'une partie de bowling, par personne, selon l'horaire de début de partie. Le lundi (uniquement pendant les vacances scolaires et la saison estivale) suit le tarif du mardi au jeudi. Les jours fériés suivent le tarif du samedi, avec une fermeture à 00h.</p>
       </div>
     </section>
- 
+
     <!-- ===== BAR & RESTAURATION ===== -->
     <section class="panel" id="bar" role="tabpanel">
       <div class="section-head reveal">
@@ -548,7 +548,7 @@
         <h2>Une brasserie conviviale au cœur du jeu</h2>
         <p>On s'y retrouve entre amis ou en famille, autour de petites faims à partager — tapas, frites, paninis — ou simplement pour boire un verre après une bonne partie.</p>
       </div>
- 
+
       <div class="feature reveal">
         <div class="feature-body">
           <h3><em>Brasserie</em> & comptoir convivial</h3>
@@ -626,7 +626,7 @@
           </svg>
         </div>
       </div>
- 
+
       <div class="grid reveal">
         <div class="card">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
@@ -646,7 +646,7 @@
         </div>
       </div>
     </section>
- 
+
     <!-- ===== OFFRES ===== -->
     <section class="panel" id="offres" role="tabpanel">
       <div class="section-head reveal">
@@ -654,7 +654,7 @@
         <h2>Des formules pour toutes les occasions</h2>
         <p>Chaque jour son bon plan, et des formules sur mesure pour les groupes et les entreprises. Réservation au 02 33 91 76 77.</p>
       </div>
- 
+
       <!-- Bons plans de la semaine -->
       <h3 class="block-title first reveal">Les bons plans de la semaine</h3>
       <div class="grid reveal">
@@ -666,7 +666,7 @@
             <div class="deal-price">15 €<small>de 14h à 19h, en illimité</small></div>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Mardi</span>
           <h3>Le mardi, tout permis</h3>
@@ -675,7 +675,7 @@
             <div class="deal-price">1 = 1 offert<small>boisson ou partie</small></div>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Mercredi</span>
           <h3>Mercredi Family Bowl</h3>
@@ -684,7 +684,7 @@
             <div class="deal-price">Offert<small>une partie pour les enfants</small></div>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Jeudi</span>
           <h3>Jeudi Campus</h3>
@@ -693,7 +693,7 @@
             <div class="deal-price">-1 €<small>sur tout · pinte à -2 €</small></div>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Vendredi soir</span>
           <h3>Pizza Strike</h3>
@@ -703,7 +703,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- Entreprises & afterwork -->
       <h3 class="block-title reveal">Pour les entreprises & l'afterwork</h3>
       <div class="grid reveal">
@@ -716,7 +716,7 @@
             <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Chaque mois</span>
           <h3>Challenge Inter-Entreprise</h3>
@@ -726,7 +726,7 @@
             <span class="card-link" onclick="showTab('contact')">Inscrire mon équipe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Sur mesure</span>
           <h3>Entreprises & CE</h3>
@@ -737,7 +737,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- Événements & groupes -->
       <h3 class="block-title reveal">Événements & groupes</h3>
       <div class="grid reveal">
@@ -760,7 +760,7 @@
           <span class="card-link" onclick="showTab('contact')">Contactez-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </div>
       </div>
- 
+
       <div class="badge-row reveal">
         <div class="bi">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -773,7 +773,7 @@
         <a class="btn btn-primary" href="tel:+33233917677" style="margin-left:auto">Composer le 02 33 91 76 77</a>
       </div>
     </section>
- 
+
     <!-- ===== ANNIVERSAIRES ===== -->
     <section class="panel" id="anniv" role="tabpanel">
       <div class="section-head reveal">
@@ -781,7 +781,7 @@
         <h2>On fête ça en grand !</h2>
         <p>Bowling, laser game ou les deux : une formule clé en main pour un anniversaire mémorable, dès le plus jeune âge. Et chez nous, une boisson est offerte à chaque enfant.</p>
       </div>
- 
+
       <div class="grid reveal">
         <div class="card promo">
           <span class="day-tag">Bowling + Laser Game</span>
@@ -797,7 +797,7 @@
             <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Bowling</span>
           <h3>Formule Quilles</h3>
@@ -812,7 +812,7 @@
             <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
- 
+
         <div class="card promo">
           <span class="day-tag">Laser Game</span>
           <h3>Formule Laser</h3>
@@ -828,7 +828,7 @@
           </div>
         </div>
       </div>
- 
+
       <div class="anniv-cta reveal">
         <div class="perks">
           <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>Une <b>boisson offerte</b> à chaque enfant</span></span>
@@ -840,7 +840,7 @@
       </div>
       <p class="price-notes reveal" style="margin-top:18px">Formules à partir de 6 enfants, sur réservation. Vous pouvez apporter le gâteau. Tarifs établis sur la base de nos prix en vigueur — détails et personnalisation confirmés au moment de la réservation.</p>
     </section>
- 
+
     <!-- ===== CONTACT ===== -->
     <section class="panel" id="contact" role="tabpanel">
       <div class="section-head reveal">
@@ -848,7 +848,7 @@
         <h2>On vous attend à Granville</h2>
         <p>Une question, une réservation, un événement à organiser ? Écrivez-nous ou passez nous voir.</p>
       </div>
- 
+
       <div class="contact-grid">
         <div class="reveal">
           <div class="info-stack">
@@ -876,7 +876,7 @@
             </div>
           </div>
         </div>
- 
+
         <div class="form-card reveal">
           <h3>Écrivez-nous</h3>
           <p class="sub">Réponse rapide pour vos réservations et événements.</p>
@@ -892,15 +892,15 @@
           </form>
         </div>
       </div>
- 
+
       <div class="map-wrap reveal">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2181.4376527614295!2d-1.5621465847111033!3d48.84044917928576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480c053267c05bab%3A0x9fc40c314e3c9b0a!2s511+Rue+du+Conillot%2C+50400+Granville!5e1!3m2!1sfr!2sfr!4v1505728176507" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Boules et Billes Granville"></iframe>
       </div>
     </section>
- 
+
   </div>
 </main>
- 
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
@@ -951,10 +951,10 @@
     <p class="legal">BOULES &amp; BILLES — SAS au capital de 17 000 € · SIREN 105 570 816 · SIRET en cours d'attribution.</p>
   </div>
 </footer>
- 
+
 <script>
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- 
+
   function runSheen(){
     if(prefersReduced) return;
     const bar = document.querySelector('.sheen-bar');
@@ -966,7 +966,7 @@
       {transform:'skewX(-16deg) translateX(330%)',  opacity:0}
     ], {duration:950, easing:'cubic-bezier(.16,1,.3,1)'});
   }
- 
+
   function showTab(id){
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected','false'));
@@ -983,7 +983,7 @@
     const y = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
     window.scrollTo({top:y, behavior:'smooth'});
   }
- 
+
   function sendMail(e){
     e.preventDefault();
     const name = document.getElementById('cn').value.trim();
@@ -995,7 +995,7 @@
     window.location.href = 'mailto:contact@boulesetbilles.fun?subject=' + subject + '&body=' + body;
     return false;
   }
- 
+
   document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
