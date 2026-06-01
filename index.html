@@ -85,12 +85,12 @@
   .brand-name b{color:var(--red)}
   .brand-sub{font-size:.66rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:4px;font-family:'Sora'}
 
-  .tabs{display:flex;gap:6px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+  .tabs{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{
     border:1px solid transparent;background:transparent;color:var(--muted);
-    font-size:.82rem;font-weight:600;letter-spacing:.3px;
-    padding:11px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;
+    font-size:.8rem;font-weight:600;letter-spacing:.2px;
+    padding:10px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;
     transition:.25s;position:relative;
   }
   .tab:hover{color:var(--ink);background:var(--surface)}
@@ -104,9 +104,9 @@
     box-shadow:0 0 0 1px rgba(255,46,62,.3),0 8px 24px -10px rgba(255,46,62,.8);
   }
   .nav-cta{
-    flex-shrink:0;display:inline-flex;align-items:center;gap:9px;
-    padding:11px 18px;border-radius:999px;font-family:'Unbounded';font-weight:600;
-    font-size:.8rem;background:var(--grad);color:#fff;
+    flex-shrink:0;display:inline-flex;align-items:center;gap:8px;
+    padding:10px 14px;border-radius:999px;font-family:'Unbounded';font-weight:600;
+    font-size:.78rem;background:var(--grad);color:#fff;
     transition:.25s;box-shadow:0 10px 26px -10px rgba(255,46,62,.85)
   }
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(255,46,62,1)}
@@ -131,7 +131,7 @@
                radial-gradient(55% 75% at 5% 100%,rgba(255,46,62,.32),transparent 60%);
     mix-blend-mode:screen;
   }
-  .hero .wrap{display:grid;gap:28px;max-width:920px}
+  .hero .wrap{display:grid;gap:28px;max-width:var(--maxw)}
   .eyebrow{
     display:inline-flex;align-items:center;gap:10px;width:fit-content;
     font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--red-soft);
@@ -376,9 +376,12 @@
   .legal{font-size:.72rem;color:var(--muted-2);line-height:1.6;margin-top:6px;max-width:760px}
 
   /* ============ RESPONSIVE ============ */
+  @media(max-width:1080px){
+    .nav-inner{flex-wrap:wrap;gap:12px 16px}
+    .brand{margin-right:auto}
+    .tabs{order:3;width:100%;margin-left:0;justify-content:center;padding-bottom:2px}
+  }
   @media(max-width:900px){
-    .nav-cta .lbl{display:none}
-    .nav-cta{padding:11px 13px}
     .brand-sub{display:none}
     .feature,.feature:nth-child(even){grid-template-columns:1fr;gap:28px}
     .feature:nth-child(even) .feature-media{order:0}
@@ -386,8 +389,10 @@
   }
   @media(max-width:640px){
     .wrap{padding:0 18px}
-    .nav-inner{padding:12px 18px;gap:12px;flex-wrap:wrap}
-    .tabs{order:3;width:100%;margin-left:0;padding-bottom:2px}
+    .nav-inner{padding:12px 18px}
+    .tabs{justify-content:flex-start}
+    .nav-cta .lbl{display:none}
+    .nav-cta{padding:10px 12px}
     .brand-logo,.brand-fallback{height:40px}
     .hero-actions{flex-direction:column;align-items:stretch}
     .btn{justify-content:center}
@@ -415,7 +420,7 @@
 
     <nav class="tabs" role="tablist" aria-label="Navigation principale">
       <button class="tab" role="tab" aria-selected="true" data-tab="activites" onclick="showTab('activites')">Activités</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="bar" onclick="showTab('bar')">Bar &amp; Restauration</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="bar" onclick="showTab('bar')">Bar &amp; Resto</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="offres" onclick="showTab('offres')">Offres</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="anniv" onclick="showTab('anniv')">Anniversaires</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="contact" onclick="showTab('contact')">Contact</button>
@@ -679,9 +684,9 @@
         <div class="card promo">
           <span class="day-tag">Mercredi</span>
           <h3>Mercredi Family Bowl</h3>
-          <p>Sortie en famille : une partie offerte pour les enfants et petits-enfants qui accompagnent parents et grands-parents.</p>
+          <p>Sortie en famille : une partie offerte pour les enfants jusqu'à 10 ans qui accompagnent parents et grands-parents.</p>
           <div class="deal-foot">
-            <div class="deal-price">Offert<small>une partie pour les enfants</small></div>
+            <div class="deal-price">Offert<small>une partie · enfant jusqu'à 10 ans</small></div>
           </div>
         </div>
 
@@ -761,16 +766,13 @@
         </div>
       </div>
 
-      <div class="badge-row reveal">
-        <div class="bi">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <span>Nous acceptons les <b>Chèques Vacances ANCV</b></span>
+      <div class="anniv-cta reveal">
+        <div class="perks">
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Nous acceptons les <b>Chèques Vacances ANCV</b></span></span>
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Une <b>partie offerte</b> pour les anniversaires</span></span>
         </div>
-        <div class="bi">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span>Une <b>partie offerte</b> pour les anniversaires</span>
-        </div>
-        <a class="btn btn-primary" href="tel:+33233917677" style="margin-left:auto">Composer le 02 33 91 76 77</a>
+        <a class="btn btn-primary" href="tel:+33233917677">Composer le 02 33 91 76 77
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
 
@@ -784,21 +786,6 @@
 
       <div class="grid reveal">
         <div class="card promo">
-          <span class="day-tag">Bowling + Laser Game</span>
-          <h3>Formule Strike</h3>
-          <ul class="anniv-incl">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de bowling + prêt de chaussures</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de laser game (20 min)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
-          </ul>
-          <div class="deal-foot">
-            <div class="from-price"><em>dès</em> 18 €<span>par enfant</span></div>
-            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </div>
-
-        <div class="card promo">
           <span class="day-tag">Bowling</span>
           <h3>Formule Quilles</h3>
           <ul class="anniv-incl">
@@ -808,7 +795,7 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
           </ul>
           <div class="deal-foot">
-            <div class="from-price"><em>dès</em> 12 €<span>par enfant</span></div>
+            <div class="from-price"><em>dès</em> 14 €<span>par enfant</span></div>
             <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
@@ -823,7 +810,22 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
           </ul>
           <div class="deal-foot">
-            <div class="from-price"><em>dès</em> 15 €<span>par enfant</span></div>
+            <div class="from-price"><em>dès</em> 16 €<span>par enfant</span></div>
+            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </div>
+
+        <div class="card promo">
+          <span class="day-tag">Bowling + Laser Game</span>
+          <h3>Formule Strike</h3>
+          <ul class="anniv-incl">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de bowling + prêt de chaussures</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de laser game (20 min)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
+          </ul>
+          <div class="deal-foot">
+            <div class="from-price"><em>dès</em> 18 €<span>par enfant</span></div>
             <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </div>
