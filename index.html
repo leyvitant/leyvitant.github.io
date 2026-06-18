@@ -289,8 +289,9 @@
   .price-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch}
   table.tarifs{border-collapse:separate;border-spacing:0;width:100%;min-width:640px}
   table.tarifs th,table.tarifs td{text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
-  table.tarifs thead th{padding:14px 4px 12px;font-family:'Sora';font-weight:600;font-size:.72rem;color:var(--muted);letter-spacing:.3px}
-  table.tarifs thead th:first-child{text-align:left;padding-left:20px}
+  table.tarifs thead th{padding:14px 4px 12px 6px;font-family:'Sora';font-weight:600;font-size:.72rem;color:var(--muted);letter-spacing:.3px;text-align:left;position:relative}
+  table.tarifs thead th:first-child{padding-left:20px}
+  table.tarifs thead th .th-end{position:absolute;right:5px;top:14px;color:var(--muted)}
   table.tarifs tbody th{padding:0 16px;text-align:left;font-family:'Sora';font-weight:600;font-size:.84rem;color:var(--ink);white-space:nowrap;border-right:1px solid rgba(255,255,255,.08)}
   table.tarifs tbody th small{display:block;font-weight:400;font-size:.66rem;color:var(--muted-2);letter-spacing:.2px;margin-top:1px}
   table.tarifs td{height:40px;font-family:'Unbounded';font-weight:700;font-size:.78rem;color:#0c0809}
@@ -525,7 +526,7 @@
             <thead>
               <tr>
                 <th>Jour / Heure</th>
-                <th>14h</th><th>15h</th><th>16h</th><th>17h</th><th>18h</th><th>19h</th><th>20h</th><th>21h</th><th>22h</th><th>23h</th><th>0h</th><th>1h</th>
+                <th>14h</th><th>15h</th><th>16h</th><th>17h</th><th>18h</th><th>19h</th><th>20h</th><th>21h</th><th>22h</th><th>23h</th><th>0h</th><th>1h<span class="th-end">2h</span></th>
               </tr>
             </thead>
             <tbody>
