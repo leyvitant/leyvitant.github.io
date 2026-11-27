@@ -55,7 +55,7 @@ export async function runStage({ section, build, stillP = 0.5 }) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   setTextureQuality({ scale: Q.tex, max: renderer.capabilities.maxTextureSize, aniso: renderer.capabilities.getMaxAnisotropy() });
 
-  const { scene, camera, update, bloom: B = {} } = await build({ renderer, small, quality: Q });
+  const { scene, camera, update, bloom: B = {}, anchors = {} } = await build({ renderer, small, quality: Q });
 
   /* post-processing: HDR target + MSAA → bloom → tone mapping / sRGB */
   const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: Q.msaa });
@@ -84,6 +84,24 @@ export async function runStage({ section, build, stillP = 0.5 }) {
     });
     if (hudTrack) hudTrack.style.setProperty('--xp', p.toFixed(4));
     if (hudCount) hudCount.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(chapters.length).padStart(2, '0');
+  }
+  /* comic-book bubbles: shown inside their progress window, pinned to a 3D anchor */
+  const bubbles = [...section.querySelectorAll('.bd[data-bubble]')].map((el) => ({ el, id: el.dataset.bubble, from: +el.dataset.from, to: +el.dataset.to, on: false }));
+  const proj = new THREE.Vector3();
+  function updateBubbles(p) {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    for (const b of bubbles) {
+      const on = p >= b.from && p <= b.to && !!anchors[b.id];
+      if (on !== b.on) { b.on = on; b.h = 0; b.el.classList.toggle('is-on', on); }   // re-adding the class replays the pop
+      if (!on) continue;
+      proj.copy(anchors[b.id]()).project(camera);
+      if (proj.z > 1) { b.el.style.opacity = '0'; continue; }
+      b.el.style.opacity = '';
+      if (!b.h) b.h = b.el.firstElementChild.offsetHeight + 24;              // bubbles grow upwards from their anchor
+      const top = Math.max(90, (document.querySelector('header.nav') || {}).offsetHeight || 0) + 12;
+      const x = clamp((proj.x * 0.5 + 0.5) * w, 100, w - 100), y = clamp((-proj.y * 0.5 + 0.5) * h, top + b.h, h - 40);
+      b.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+    }
   }
   const pill = section.querySelector('.xp-pill'), pillTxt = section.querySelector('.xp-status-txt');
   function paintStatus() {
@@ -133,6 +151,7 @@ export async function runStage({ section, build, stillP = 0.5 }) {
     update(prog, clock, pointer);
     composer.render(dt);
     updateDOM(prog);
+    updateBubbles(prog);
     if (visible && !document.hidden) raf = requestAnimationFrame(frame);
   }
   const kick = () => { if (!raf && visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };

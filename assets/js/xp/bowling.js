@@ -411,5 +411,9 @@ export async function buildBowling({ renderer, small, quality = {} }) {
     ball.castShadow = true; pins.forEach((pn) => { pn.m.castShadow = true; });
     world.traverse((o) => { if (o.isMesh && o.geometry === laneGeo) o.receiveShadow = true; });
   }
-  return { scene, camera, update, bloom: { strength: 0.5, radius: 0.5, threshold: 1.0 } };
+  const anchors = {
+    strike: () => V(0.1, 0.95, -18.55),
+    crash: () => ball.position.clone().add(V(-0.4, 0.42, 0)),
+  };
+  return { scene, camera, update, anchors, bloom: { strength: 0.5, radius: 0.5, threshold: 1.0 } };
 }

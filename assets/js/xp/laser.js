@@ -251,5 +251,13 @@ export async function buildLaser({ small }) {
     });
   }
 
-  return { scene, camera, update, bloom: { strength: 0.45, radius: 0.45, threshold: 0.85 } };
+  const muzzleAt = () => muzzle.getWorldPosition(new THREE.Vector3()).add(V(0, 0.12, 0));
+  const anchors = {
+    piou0: muzzleAt, piou1: muzzleAt, piou2: muzzleAt,
+    hit0: () => AIM[0].clone().add(V(0, 0.62, 0)),
+    hit1: () => AIM[1].clone().add(V(0, 0.62, 0)),
+    hit2: () => AIM[2].clone().add(V(0, 0.7, 0)),
+    miss: () => foes[2].body.localToWorld(V(-0.25, 2.05, 0)),
+  };
+  return { scene, camera, update, anchors, bloom: { strength: 0.45, radius: 0.45, threshold: 0.85 } };
 }
