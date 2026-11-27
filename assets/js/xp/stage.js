@@ -1,14 +1,38 @@
 /* =====================================================================
    Stage — the shared machinery behind every scroll-driven 3D scene:
-   renderer, sizing, HTML chapters synced to progress, HUD, render loop.
+   renderer + cinematic post-processing, sizing, HTML chapters synced to
+   progress, HUD, render loop.
+
+   Image quality ("as close to 4K as the device allows"):
+   • renders at the screen's native density — up to 2× CSS pixels, i.e.
+     3840 px wide on a 4K display (`?q=4k` forces a 3840-px-wide render)
+   • HDR (half-float) pipeline, 4× MSAA, bloom on neons / UV / lasers,
+     ACES tone mapping, 2× texture density, real shadows (desktop)
+   • dynamic resolution: if frames get slow the render scale drops a
+     notch (and climbs back when there is headroom) so motion stays fluid
+
    Scroll is never hijacked: progress follows native scroll with damping,
    and snaps when the page jumps (tabs, search, skip link) so a scene is
    never "replayed" at high speed. Rendering stops off-screen.
    ===================================================================== */
-import { THREE, clamp, sstep } from './util.js';
+import { THREE, clamp, sstep, setTextureQuality } from './util.js';
+import { EffectComposer } from '../../vendor/three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from '../../vendor/three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from '../../vendor/three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from '../../vendor/three/addons/postprocessing/OutputPass.js';
 
 const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
 let pointerBound = false;
+
+function qualityProfile(small) {
+  const dpr = window.devicePixelRatio || 1;
+  const force4k = /[?&]q=4k\b/.test(location.search);
+  const q = small
+    ? { maxPR: Math.min(dpr, 1.6), minPR: 0.7, msaa: 0, tex: 1, shadows: false }
+    : { maxPR: Math.min(Math.max(dpr, 1), 2), minPR: 0.75, msaa: 4, tex: 2, shadows: true };
+  if (force4k) { q.maxPR = Math.max(q.maxPR, 3840 / Math.max(innerWidth, 1)); q.minPR = q.maxPR; q.tex = 2; }
+  return q;
+}
 
 export async function runStage({ section, build, stillP = 0.5 }) {
   const docEl = document.documentElement;
@@ -20,13 +44,26 @@ export async function runStage({ section, build, stillP = 0.5 }) {
     window.addEventListener('pointermove', (e) => { pointer.tx = e.clientX / innerWidth - 0.5; pointer.ty = e.clientY / innerHeight - 0.5; }, { passive: true });
   }
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, powerPreference: 'high-performance', alpha: false });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.3 : 1.75));
+  const Q = qualityProfile(small);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', alpha: false });
+  let pr = Q.maxPR;
+  renderer.setPixelRatio(pr);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   renderer.setClearColor(0x040506, 1);
+  renderer.shadowMap.enabled = Q.shadows;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  setTextureQuality({ scale: Q.tex, max: renderer.capabilities.maxTextureSize, aniso: renderer.capabilities.getMaxAnisotropy() });
 
-  const { scene, camera, update } = await build({ renderer, small });
+  const { scene, camera, update, bloom: B = {} } = await build({ renderer, small, quality: Q });
+
+  /* post-processing: HDR target + MSAA → bloom → tone mapping / sRGB */
+  const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: Q.msaa });
+  const composer = new EffectComposer(renderer, target);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), B.strength ?? 0.55, B.radius ?? 0.5, B.threshold ?? 0.85);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
 
   /* chapters & HUD */
   const chapters = [...section.querySelectorAll('.xp-ch')].map((el) => ({ el, from: +el.dataset.from, to: +el.dataset.to, inert: null }));
@@ -61,35 +98,47 @@ export async function runStage({ section, build, stillP = 0.5 }) {
   /* sizing */
   function resize() {
     const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
-    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(pr); composer.setPixelRatio(pr);
+    renderer.setSize(w, h, false); composer.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }
   resize();
-  const renderStill = () => { update(stillP, 3, pointer); renderer.render(scene, camera); };
+  const renderStill = () => { update(stillP, 3, pointer); composer.render(); };
   let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); if (isStatic) renderStill(); }, 100); }, { passive: true });
 
   if (isStatic) { renderStill(); section.classList.add('is-ready'); return; }
 
-  /* loop */
-  const target = () => { const r = section.getBoundingClientRect(); const total = r.height - innerHeight; return total > 0 ? clamp(-r.top / total) : 0; };
-  let prog = target(), last = performance.now(), visible = true, raf = 0, clock = 0;
+  /* loop + dynamic resolution */
+  const progressTarget = () => { const r = section.getBoundingClientRect(); const total = r.height - innerHeight; return total > 0 ? clamp(-r.top / total) : 0; };
+  let prog = progressTarget(), last = performance.now(), visible = true, raf = 0, clock = 0;
+  let ema = 16, sinceAdjust = 0;
   updateDOM(prog);
+  function adaptResolution(dt) {
+    ema += (dt * 1000 - ema) * 0.08;
+    sinceAdjust += dt;
+    if (sinceAdjust < 1) return;
+    let next = pr;
+    if (ema > 24 && pr > Q.minPR) next = Math.max(Q.minPR, pr * 0.85);
+    else if (ema < 13 && pr < Q.maxPR) next = Math.min(Q.maxPR, pr * 1.1);
+    if (Math.abs(next - pr) > 0.01) { pr = next; resize(); sinceAdjust = 0; }
+  }
   function frame(now) {
     raf = 0;
     const dt = Math.min((now - last) / 1000, 0.05); last = now; clock += dt;
-    const tg = target();
+    const tg = progressTarget();
     // a jump (tab, search result, skip link) lands directly: no fast replay of the film
     prog = Math.abs(tg - prog) > 0.15 ? tg : prog + (tg - prog) * (1 - Math.exp(-dt * 6));
     pointer.x += (pointer.tx - pointer.x) * 0.05; pointer.y += (pointer.ty - pointer.y) * 0.05;
+    adaptResolution(dt);          // resize *before* drawing: a resized canvas is cleared, never present it empty
     update(prog, clock, pointer);
-    renderer.render(scene, camera);
+    composer.render(dt);
     updateDOM(prog);
     if (visible && !document.hidden) raf = requestAnimationFrame(frame);
   }
   const kick = () => { if (!raf && visible && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
   new IntersectionObserver((e) => { visible = e[0].isIntersecting; if (visible) kick(); }, { rootMargin: '100px' }).observe(section);
   document.addEventListener('visibilitychange', kick);
-  update(prog, 0, pointer); renderer.compile(scene, camera); renderer.render(scene, camera);
+  update(prog, 0, pointer); renderer.compile(scene, camera); composer.render();
   section.classList.add('is-ready');
   kick();
 }

@@ -1,17 +1,31 @@
 /* Shared helpers for the 3D stages. */
-import * as THREE from '../../vendor/three/three.module.min.js';
+import * as THREE from 'three'; // resolved by the import map in index.html
 export { THREE };
 export const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 export const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
 export const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 export const V = (x, y, z) => new THREE.Vector3(x, y, z);
 export function rng(seed) { return () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+/* Procedural textures are drawn at a quality-dependent resolution:
+   draw code always works in logical units (w × h); on high-end screens the
+   canvas is rendered 2× denser (clamped to the GPU's max texture size). */
+const TEX = { scale: 1, max: 4096, aniso: 4 };
+export function setTextureQuality(o) { Object.assign(TEX, o); }
+const blurDesc = Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype, 'shadowBlur');
 export function canvasTex(w, h, draw, srgb = true) {
-  const c = document.createElement('canvas'); c.width = w; c.height = h;
-  draw(c.getContext('2d'), w, h);
+  const s = Math.max(1, Math.min(TEX.scale, TEX.max / Math.max(w, h)));
+  const c = document.createElement('canvas'); c.width = Math.round(w * s); c.height = Math.round(h * s);
+  const g = c.getContext('2d');
+  if (s !== 1) {
+    const st = g.setTransform.bind(g);
+    g.setTransform = (a, b, cc, d, e, f) => st(a * s, b * s, cc * s, d * s, e * s, f * s);
+    Object.defineProperty(g, 'shadowBlur', { get: () => blurDesc.get.call(g) / s, set: (v) => blurDesc.set.call(g, v * s) });
+    g.setTransform(1, 0, 0, 1, 0, 0);
+  }
+  draw(g, w, h);
   const t = new THREE.CanvasTexture(c);
   if (srgb) t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 4;
+  t.anisotropy = TEX.aniso;
   return t;
 }
 export function glowTextures() {

@@ -15,7 +15,7 @@ const RACK = []; // classic 10-pin triangle
 for (let row = 0; row < 4; row++) for (let j = 0; j <= row; j++) RACK.push([(j - row / 2) * 0.3048, HEAD_Z - row * 0.264]);
 const DOOR_X = 7.2, DOOR_Z = -6.1;
 
-export async function buildBowling({ renderer, small }) {
+export async function buildBowling({ renderer, small, quality = {} }) {
   const scene = new THREE.Scene();
   const FOG = new THREE.Color(0x02041a);
   scene.fog = new THREE.FogExp2(FOG.clone(), 0.045);
@@ -56,7 +56,6 @@ export async function buildBowling({ renderer, small }) {
     }
     g.fillStyle = '#1a2a80'; g.fillRect(0, h - 4, w, 4); // foul line
   });
-  laneTex.anisotropy = 8;
 
   const pinTex = canvasTex(64, 256, (g, w, h) => {
     g.fillStyle = '#f5f2ec'; g.fillRect(0, 0, w, h);
@@ -89,7 +88,7 @@ export async function buildBowling({ renderer, small }) {
     approach: new THREE.MeshStandardMaterial({ color: 0xc9975c, map: laneTex, roughness: 0.35, envMapIntensity: 0.5 }),
     dark: new THREE.MeshStandardMaterial({ color: 0x060a20, roughness: 0.5, metalness: 0.3 }),
     gutter: new THREE.MeshStandardMaterial({ color: 0x0c1440, roughness: 0.2, metalness: 0.8, emissive: 0x0a1650, emissiveIntensity: 0.5 }),
-    pin: new THREE.MeshStandardMaterial({ map: pinTex, roughness: 0.25, metalness: 0, envMapIntensity: 0.8, emissive: 0x6fa8ff, emissiveMap: pinTex, emissiveIntensity: 0.55 }),
+    pin: new THREE.MeshStandardMaterial({ map: pinTex, roughness: 0.25, metalness: 0, envMapIntensity: 0.8, emissive: 0x6fa8ff, emissiveMap: pinTex, emissiveIntensity: 0.32 }),
     ball: new THREE.MeshPhysicalMaterial({ map: ballTex, roughness: 0.12, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.4 }),
   };
   const mirrorOf = (m) => { const c = m.clone(); c.transparent = false; c.opacity = 1; return c; }; // winding flip handled by three.js (negative determinant)
@@ -254,7 +253,8 @@ export async function buildBowling({ renderer, small }) {
 
   /* ---------- lights ---------- */
   const hemi = new THREE.HemisphereLight(0x3a55ff, 0x05081a, 0.75); scene.add(hemi);
-  const deck = new THREE.SpotLight(0xc8d2ff, 26, 9, 0.75, 0.6, 1.4); deck.position.set(0, 1.0, -17.2); deck.target.position.set(0, 0, -18.7); scene.add(deck, deck.target);
+  const deck = new THREE.SpotLight(0xc8d2ff, 13, 9, 0.75, 0.6, 1.4); deck.position.set(0, 1.0, -17.2); deck.target.position.set(0, 0, -18.7); scene.add(deck, deck.target);
+  if (quality.shadows) { deck.castShadow = true; deck.shadow.mapSize.set(2048, 2048); deck.shadow.bias = -0.0004; deck.shadow.radius = 4; }
   const laneLights = [-3, -9, -14].map((z) => { const l = new THREE.PointLight(0x5a6dff, 7, 10, 1.6); l.position.set(0, 2.9, z); scene.add(l); return l; });
   const flash = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffe0c0, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0, toneMapped: false, fog: false }));
   flash.position.set(0.05, 0.2, -18.45); flash.scale.set(2.4, 2.4, 1); world.add(flash);
@@ -402,10 +402,14 @@ export async function buildBowling({ renderer, small }) {
 
     // strike flash
     const fl = Math.exp(-Math.pow((p - (IMPACT_P + 0.012)) / 0.012, 2));
-    flash.material.opacity = fl * 0.9; deck.intensity = 26 + 60 * fl;
+    flash.material.opacity = fl * 0.35; deck.intensity = 13 + 8 * fl; // bloom already amplifies the impact
 
     rigCamera(camera, K, p, time, pointer);
   }
 
-  return { scene, camera, update };
+  if (quality.shadows) {
+    ball.castShadow = true; pins.forEach((pn) => { pn.m.castShadow = true; });
+    world.traverse((o) => { if (o.isMesh && o.geometry === laneGeo) o.receiveShadow = true; });
+  }
+  return { scene, camera, update, bloom: { strength: 0.5, radius: 0.5, threshold: 1.0 } };
 }

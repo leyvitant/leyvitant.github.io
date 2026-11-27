@@ -14,6 +14,7 @@
    ===================================================================== */
 import { THREE, sstep, V, rng, canvasTex, glowTextures, neon, rigCamera } from './util.js';
 import { makeLaserDoor } from './door.js';
+import { makeGenesisGun } from './gun.js';
 
 const GREEN = 0x39ff6a, RED = 0xff2a3a;
 const WALL_H = 2.5;
@@ -162,21 +163,14 @@ export async function buildLaser({ small }) {
   world.updateMatrixWorld(true);
   const AIM = foes.map((f) => f.chest().clone());
 
-  /* ---------- the player's laser gun (first person, child of the camera) ---------- */
-  const gunMat = new THREE.MeshStandardMaterial({ color: 0x1e2230, roughness: 0.4, metalness: 0.6, emissive: 0x1b0f3a, emissiveIntensity: 0.6 });
-  const gun = new THREE.Group(); camera.add(gun);
-  const part = (geo, mat, x, y, z, rx = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.x = rx; gun.add(m); return m; };
-  part(new THREE.BoxGeometry(0.1, 0.12, 0.42), gunMat, 0, 0, 0);
-  const barrel = new THREE.CylinderGeometry(0.026, 0.03, 0.26, 16); barrel.rotateX(Math.PI / 2);
-  part(barrel, gunMat, 0, 0.01, -0.32);
-  part(new THREE.BoxGeometry(0.07, 0.17, 0.09), gunMat, 0, -0.12, 0.1, 0.35);
-  part(new THREE.BoxGeometry(0.03, 0.04, 0.16), gunMat, 0, 0.08, -0.02);
-  for (const s of [-1, 1]) part(new THREE.BoxGeometry(0.006, 0.02, 0.36), neon(GREEN), s * 0.052, 0.02, -0.02);
-  const muzzleRing = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.006, 6, 20), neon(GREEN)); muzzleRing.position.set(0, 0.01, -0.45); gun.add(muzzleRing);
-  const muzzle = new THREE.Object3D(); muzzle.position.set(0, 0.01, -0.47); gun.add(muzzle);
-  const GUN_REST = V(0.24, -0.25, -0.52);
-  gun.position.copy(GUN_REST); gun.rotation.set(0.02, 0.06, 0);
-  const gunLight = new THREE.PointLight(GREEN, 0, 1.2, 2); camera.add(gunLight); gunLight.position.set(0.2, -0.15, -0.8);
+  /* ---------- the player's laser blaster (venue model, first person) ---------- */
+  const blaster = makeGenesisGun({ team: GREEN });
+  const gun = blaster.group; camera.add(gun);
+  const muzzle = blaster.muzzle;
+  const GUN_REST = V(0.2, -0.2, -0.46);
+  gun.position.copy(GUN_REST); gun.rotation.set(0.04, 0.1, 0);
+  const gunLight = new THREE.PointLight(GREEN, 0, 1.2, 2); camera.add(gunLight); gunLight.position.set(0.2, -0.12, -0.7);
+  const fill = new THREE.PointLight(0x9a7cff, 0.6, 1.2, 2); camera.add(fill); fill.position.set(0.05, 0.1, -0.2); // UV spill on the gun
 
   /* ---------- beams ---------- */
   const beamGeo = new THREE.CylinderGeometry(1, 1, 1, 8, 1, true); beamGeo.translate(0, 0.5, 0);
@@ -195,7 +189,7 @@ export async function buildLaser({ small }) {
         g.position.copy(a); g.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); g.scale.set(1, len, 1);
         core.material.opacity = k; halo.material.opacity = 0.3 * k;
         flash.position.copy(a); flash.scale.setScalar(0.35 * k); flash.material.opacity = k;
-        impact.position.copy(b); impact.scale.setScalar(0.9 * k); impact.material.opacity = k;
+        impact.position.copy(b); impact.scale.setScalar(0.6 * k); impact.material.opacity = 0.6 * k;
       },
     };
   }
@@ -233,6 +227,7 @@ export async function buildLaser({ small }) {
     gun.position.set(GUN_REST.x, GUN_REST.y - lower * 0.5 + Math.sin(p * 160) * 0.012 * walk, GUN_REST.z + kick * 0.06);
     gun.rotation.x = 0.02 + kick * 0.16 + Math.sin(p * 80) * 0.02 * walk;
     gunLight.intensity = kick * 1.5;
+    blaster.setGlow(kick);
     camera.updateMatrixWorld(true);
     muzzle.getWorldPosition(a);
 
@@ -249,12 +244,12 @@ export async function buildLaser({ small }) {
       const flash = Math.exp(-Math.pow((p - sp - 0.012) / 0.012, 2));
       const blink = hit ? 0.35 + 0.65 * (Math.sin(time * 14 + i) > 0 ? 1 : 0) : 1;   // a hit vest "dies" and blinks
       f.sMat.color.copy(red).multiplyScalar(blink).lerp(white, flash);
-      f.halo.material.opacity = 0.7 * blink + flash;
+      f.halo.material.opacity = 0.55 * blink + 0.5 * flash;
       f.halo.material.color.copy(red).lerp(white, flash);
-      f.halo.scale.setScalar(0.9 + flash * 1.6);
+      f.halo.scale.setScalar(0.8 + flash * 0.8);
       f.body.rotation.x = -0.22 * hit * (0.6 + 0.4 * Math.exp(-(p - sp) * 30));
     });
   }
 
-  return { scene, camera, update };
+  return { scene, camera, update, bloom: { strength: 0.45, radius: 0.45, threshold: 0.85 } };
 }
