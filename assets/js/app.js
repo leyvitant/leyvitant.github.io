@@ -133,7 +133,6 @@
         panel.classList.add('is-entering');
         clearTimeout(panel._t); panel._t = setTimeout(function () { panel.classList.remove('is-entering'); }, 1400);
       }
-      if (window.Marbles && prev !== id) window.Marbles.nudge(PANELS.indexOf(id) > PANELS.indexOf(prev) ? 1 : -1);
     }
     current = id;
     tabs.forEach(function (t) {
@@ -240,19 +239,6 @@
       var c = e.target.closest && e.target.closest('.card');
       if (c) { var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); }
     }, { passive: true });
-    var bg = $('.hero-bg'), hero = $('.hero');
-    if (bg && hero) hero.addEventListener('pointermove', function (e) {
-      if (!motionOK()) return;
-      var r = hero.getBoundingClientRect();
-      bg.style.setProperty('--px', (((e.clientX - r.left) / r.width - 0.5) * -14).toFixed(1) + 'px');
-      bg.style.setProperty('--py', (((e.clientY - r.top) / r.height - 0.5) * -14).toFixed(1) + 'px');
-    }, { passive: true });
-  }
-
-  /* dim the marbles once the reader leaves the hero */
-  var heroEl = $('.hero');
-  if (heroEl && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (ents) { document.body.classList.toggle('is-deep', !ents[0].isIntersecting); }, { threshold: 0, rootMargin: '-35% 0px 0px 0px' }).observe(heroEl);
   }
 
   /* ---------- Motion toggle (WCAG 2.2.2 pause control) ---------- */
@@ -266,15 +252,13 @@
     if (mqReduce.matches) { mt.disabled = true; mt.setAttribute('aria-pressed', 'true'); lbl.textContent = 'Animations réduites (réglage système)'; return; }
     mt.disabled = false;
     mt.setAttribute('aria-pressed', String(off));
-    lbl.textContent = off ? 'Relancer les billes' : 'Mettre les billes en pause';
+    lbl.textContent = off ? 'Réactiver l\'animation 3D' : 'Désactiver l\'animation 3D';
   }
   if (mt) mt.addEventListener('click', function () {
     var off = mt.getAttribute('aria-pressed') !== 'true';
     try { localStorage.setItem('bb-motion', off ? 'off' : 'on'); } catch (e) {}
-    if (window.Marbles) window.Marbles.setEnabled(!off);
-    syncMotionUI();
+    location.reload(); // the 3D stage switches between scroll-driven and still mode at load
   });
-  document.addEventListener('marbles:change', syncMotionUI);
 
   /* ---------- Contact form (unchanged behaviour: opens the mail client) ---------- */
   window.sendMail = function (e) {
@@ -288,6 +272,10 @@
     window.location.href = 'mailto:contact@boulesetbilles.fun?subject=' + subject + '&body=' + body;
     return false;
   };
+
+  /* ---------- Media fallback: hide empty photo frames if the image host fails ---------- */
+  var heroPhoto = $('.xp-photo');
+  if (heroPhoto) { var probe = new Image(); probe.onerror = function () { heroPhoto.hidden = true; }; probe.src = 'https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg'; }
 
   /* ---------- Boot ---------- */
   window.App = { showTab: showTab, goTo: goTo, applyFilter: applyFilter, hoursAnswerHTML: hoursAnswerHTML, bowlingAnswerHTML: bowlingAnswerHTML, todayDealsHTML: todayDealsHTML, status: computeStatus };

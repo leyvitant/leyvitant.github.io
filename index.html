@@ -43,14 +43,13 @@
   "sameAs":["https://www.facebook.com/boulesetbilles/"]
 }
 </script>
+<script>(function(){var d=document.documentElement,s=false;try{s=matchMedia('(prefers-reduced-motion: reduce)').matches||localStorage.getItem('bb-motion')==='off'}catch(e){}if(!('WebGLRenderingContext' in window))s=true;d.classList.add(s?'xp-static':'xp-live')})();</script>
+<noscript><style>.xp{height:auto!important}.xp-sticky{position:relative!important;height:auto!important}.xp-ch{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important}</style></noscript>
 <noscript><style>.panel{display:block!important}.js-only{display:none!important}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#essentiel">Aller aux infos pratiques</a>
 <a class="skip" href="#panels">Aller au contenu</a>
-
-<!-- Physics stage: purely decorative, never intercepts input -->
-<canvas id="marbles" aria-hidden="true"></canvas>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="site-header">
@@ -87,36 +86,72 @@
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <span class="eyebrow"><span class="pulse"></span> Complexe de jeux · 511 rue du Conillot, Granville</span>
-      <h1>Le terrain de jeu<br>de <span class="neon">Granville</span></h1>
-      <p class="lead">Bowling, laser game dernière génération, billard et brasserie : une seule adresse pour s'amuser entre amis, en famille ou en équipe — jusque tard dans la nuit.</p>
-      <div class="hero-actions">
-        <button class="btn btn-primary magnetic" onclick="showTab('activites')">
-          Découvrir les activités
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-        <button class="btn btn-ghost magnetic" onclick="showTab('offres')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
-          Voir les bons plans
-        </button>
+<!-- ============ EXPERIENCE (scroll-driven 3D) ============ -->
+<section class="xp" id="top" aria-label="Présentation de Boules et Billes">
+  <div class="xp-sticky">
+    <canvas id="xp-canvas" aria-hidden="true"></canvas>
+    <div class="xp-poster" aria-hidden="true"></div>
+    <div class="xp-vignette" aria-hidden="true"></div>
+
+    <div class="xp-chapters">
+      <div class="xp-ch xp-ch-hero" data-from="0" data-to="0.13">
+        <span class="eyebrow"><span class="pulse"></span> Complexe de jeux · 511 rue du Conillot, Granville</span>
+        <h1>Le terrain de jeu<br>de <span class="neon">Granville</span></h1>
+        <p class="lead">Bowling, laser game dernière génération, billard et brasserie : une seule adresse pour s'amuser entre amis, en famille ou en équipe — jusque tard dans la nuit.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary magnetic" onclick="showTab('activites')">
+            Découvrir les activités
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="btn btn-ghost magnetic" onclick="showTab('offres')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
+            Voir les bons plans
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="chip"><span class="dot"></span><b>8</b>&nbsp;pistes de bowling</div>
+          <div class="chip"><span class="dot"></span>Laser game <b>300&nbsp;m²</b></div>
+          <div class="chip"><span class="dot"></span>Ouvert <b>jusqu'à 2h</b> le week-end</div>
+          <div class="chip"><span class="dot"></span>Dès <b>4 ans</b></div>
+        </div>
       </div>
-      <div class="hero-stats">
-        <div class="chip"><span class="dot"></span><b>8</b>&nbsp;pistes de bowling</div>
-        <div class="chip"><span class="dot"></span>Laser game <b>300&nbsp;m²</b></div>
-        <div class="chip"><span class="dot"></span>Ouvert <b>jusqu'à 2h</b> le week-end</div>
-        <div class="chip"><span class="dot"></span>Dès <b>4 ans</b></div>
+
+      <div class="xp-ch xp-ch-side" data-from="0.17" data-to="0.42">
+        <span class="xp-label">( 01 — Bowling )</span>
+        <p class="xp-title">8 pistes.<br><em>Une trajectoire.</em></p>
+        <p class="xp-text">Débutants, enfants dès 4 ans ou joueurs confirmés : clubs, ligues et pros trouvent tous leur piste au cœur du bowling de Granville.</p>
+      </div>
+
+      <div class="xp-ch xp-ch-center" data-from="0.53" data-to="0.65">
+        <p class="xp-giant">Strike<span>.</span></p>
+        <p class="xp-text">Lance-boules pour les plus petits · billard anglais, babyfoots &amp; jeux vidéo</p>
+      </div>
+
+      <div class="xp-ch xp-ch-side xp-right" data-from="0.69" data-to="0.86">
+        <span class="xp-label">( 02 — Laser game )</span>
+        <p class="xp-title">300 m²<br><em>d'immersion.</em></p>
+        <p class="xp-text">Une arène labyrinthique et futuriste, un matériel dernière génération. 9&nbsp;€ les 20 min · 11&nbsp;€ les 30 min · 15&nbsp;€ les 2 × 20 min.</p>
+      </div>
+
+      <div class="xp-ch xp-ch-final" data-from="0.9" data-to="1.01">
+        <figure class="xp-photo" aria-hidden="true"><div class="hero-bg"></div></figure>
+        <div>
+          <span class="xp-label">( 03 — Et après la partie )</span>
+          <p class="xp-title">Brasserie, anniversaires,<br><em>bons plans.</em></p>
+          <div class="hero-actions">
+            <button class="btn btn-primary magnetic" onclick="showTab('bar')">Bar &amp; Resto</button>
+            <button class="btn btn-ghost magnetic" onclick="showTab('anniv')">Anniversaires</button>
+            <button class="btn btn-ghost magnetic" onclick="showTab('offres')">Offres</button>
+          </div>
+        </div>
       </div>
     </div>
-    <figure class="oculus" aria-hidden="true">
-      <div class="oculus-glass">
-        <div class="hero-bg"></div>
-      </div>
-      <figcaption class="oculus-cap js-only"><span class="hint-dot"></span>Bougez, touchez&nbsp;: les billes répondent</figcaption>
-    </figure>
+
+    <div class="xp-hud js-only">
+      <a class="xp-pill" href="#essentiel" data-goto="essentiel"><span class="xp-dot"></span><span id="xp-status">Horaires &amp; infos</span><span class="xp-sep">·</span><span class="xp-tel">02 33 91 76 77</span></a>
+      <div class="xp-progress" aria-hidden="true"><span class="xp-count">01 / 05</span><span class="xp-track"><i></i></span><span class="xp-hint">Faites défiler</span></div>
+      <a class="xp-skip" href="#essentiel">Passer l'animation <span aria-hidden="true">↓</span></a>
+    </div>
   </div>
 </section>
 
@@ -183,7 +218,7 @@
         </div>
         <div class="feature-media">
           <span class="media-tag">Bowling</span>
-          <img src="https://boulesetbilles.fun/wp-content/uploads/2018/11/salle-de-bowling-et-jeux.jpg" alt="Salle de bowling de Granville : pistes et panneaux de pistes" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2018/11/2-1024x498.jpg'">
+          <img src="https://boulesetbilles.fun/wp-content/uploads/2018/11/salle-de-bowling-et-jeux.jpg" alt="Salle de bowling de Granville : pistes et panneaux de pistes" loading="lazy" decoding="async" onerror="this.onerror=function(){this.hidden=true};this.src='https://boulesetbilles.fun/wp-content/uploads/2018/11/2-1024x498.jpg'">
         </div>
       </article>
 
@@ -201,7 +236,7 @@
         </div>
         <div class="feature-media">
           <span class="media-tag">Laser Game</span>
-          <img src="https://boulesetbilles.fun/wp-content/uploads/2024/02/laser-game-normandie.jpg" alt="Salle de laser game dernière génération à Granville" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2024/06/laser-game-de-granville.jpg'">
+          <img src="https://boulesetbilles.fun/wp-content/uploads/2024/02/laser-game-normandie.jpg" alt="Salle de laser game dernière génération à Granville" loading="lazy" decoding="async" onerror="this.onerror=function(){this.hidden=true};this.src='https://boulesetbilles.fun/wp-content/uploads/2024/06/laser-game-de-granville.jpg'">
         </div>
       </article>
 
@@ -648,7 +683,7 @@
             </a>
           </div>
           <button type="button" class="motion-toggle js-only" id="motion-toggle" aria-pressed="false">
-            <span class="mt-dot" aria-hidden="true"></span><span class="mt-lbl">Mettre les billes en pause</span>
+            <span class="mt-dot" aria-hidden="true"></span><span class="mt-lbl">Désactiver l'animation 3D</span>
           </button>
         </div>
       </div>
@@ -694,8 +729,8 @@
   </div>
 </div>
 
-<script src="assets/js/marbles.js" defer></script>
 <script src="assets/js/search.js" defer></script>
 <script src="assets/js/app.js" defer></script>
+<script type="module" src="assets/js/experience.js"></script>
 </body>
 </html>
