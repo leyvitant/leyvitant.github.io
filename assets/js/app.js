@@ -270,7 +270,7 @@
 
   /* ---------- Media fallback: hide empty photo frames if the image host fails ---------- */
   var heroPhoto = $('.xp-photo');
-  if (heroPhoto) { var probe = new Image(); probe.onerror = function () { heroPhoto.hidden = true; }; probe.src = 'https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg'; }
+  // (the frame now uses the local hall photo first, the legacy URL only as a fallback layer)
 
   /* ---------- Boot ---------- */
   window.App = { showTab: showTab, goTo: goTo, applyFilter: applyFilter, hoursAnswerHTML: hoursAnswerHTML, bowlingAnswerHTML: bowlingAnswerHTML, todayDealsHTML: todayDealsHTML, status: computeStatus };

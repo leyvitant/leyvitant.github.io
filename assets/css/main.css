@@ -188,6 +188,8 @@ header.nav{
 .xp-laser .xp-poster{background:radial-gradient(60% 50% at 50% 35%,rgba(138,77,255,.3),transparent 70%),radial-gradient(40% 40% at 70% 70%,rgba(57,255,106,.15),transparent 70%),#0b0518}
 .xp.is-failed .xp-canvas{display:none}
 .xp.is-failed .xp-poster{opacity:1}
+.xp-bowling .xp-poster{background:linear-gradient(180deg,rgba(4,5,20,.55),rgba(4,5,20,.85)),url("../img/bowling-granville.jpg") center/cover no-repeat,#02041a}
+.xp-static .xp-bowling.is-failed .xp-sticky,.no-webgl .xp-bowling .xp-sticky{background:linear-gradient(90deg,rgba(4,5,20,.9),rgba(4,5,20,.5)),url("../img/bowling-granville.jpg") center/cover no-repeat}
 .xp-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .xp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s var(--ease-out)}
 .xp.is-ready .xp-canvas{opacity:1}
@@ -217,11 +219,11 @@ header.nav{
 .xp-giant{font-family:var(--f-display);font-weight:800;font-size:clamp(4.5rem,20vw,17rem);line-height:.85;letter-spacing:-.06em;color:#fff;
   text-shadow:0 0 30px rgba(255,93,79,.9),0 0 90px rgba(255,93,79,.55)}
 .xp-giant span{color:#7ff3ff;text-shadow:0 0 30px rgba(63,240,255,.9)}
-.xp-green{color:#eaffef;text-shadow:0 0 30px rgba(57,255,106,.95),0 0 90px rgba(57,255,106,.6)}
+.xp-green{font-size:clamp(3.4rem,13.5vw,11.5rem);color:#eaffef;text-shadow:0 0 30px rgba(57,255,106,.95),0 0 90px rgba(57,255,106,.6)}
 .xp-green span{color:#ff2fd6;text-shadow:0 0 30px rgba(255,47,214,.9)}
 .xp-laser .xp-label{color:#9dffb8;text-shadow:0 0 18px rgba(57,255,106,.6)}
 .xp-photo{position:relative;width:clamp(160px,22vw,300px);aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 60px -20px rgba(0,0,0,.9),0 0 60px -20px rgba(255,93,79,.5);flex-shrink:0}
-.xp-photo .hero-bg{position:absolute;inset:0;background:url("https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg") center/cover no-repeat,linear-gradient(135deg,#2a1416,#0d1418)}
+.xp-photo .hero-bg{position:absolute;inset:0;background:url("../img/bowling-granville-800.jpg") center/cover no-repeat,url("https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg") center/cover no-repeat,linear-gradient(135deg,#2a1416,#0d1418)}
 .eyebrow{
   display:inline-flex;align-items:center;gap:10px;
   font-size:.72rem;letter-spacing:2.6px;text-transform:uppercase;color:var(--mist);
@@ -290,6 +292,8 @@ header.nav{
 .xp-count{font-variant-numeric:tabular-nums;color:var(--salt)}
 .xp-skip{font-size:.82rem;font-weight:600;color:var(--salt);padding:10px 16px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:rgba(8,10,12,.82)}
 .xp-skip:hover{border-color:#7ff3ff;color:#7ff3ff}
+
+@media (max-height:820px){.xp-live .xp-ch-hero .hero-stats{display:none}} /* same facts appear in chapter 01, the laser chapter and « L'essentiel » */
 
 /* Static mode: reduced motion, no WebGL, or animation switched off */
 .xp-static .xp{height:auto}
