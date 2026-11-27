@@ -2,418 +2,61 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BOULES et BILLES — Bowling & Laser Game à Granville</title>
 <meta name="description" content="Le complexe de jeux de Granville : 8 pistes de bowling, laser game dernière génération, billard et brasserie. Bons plans toute la semaine.">
+<meta name="theme-color" content="#0a0d10">
+<link rel="canonical" href="https://boulesetbillesgranville.fr/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Boules et Billes Granville">
+<meta property="og:title" content="BOULES et BILLES — Bowling & Laser Game à Granville">
+<meta property="og:description" content="Le complexe de jeux de Granville : 8 pistes de bowling, laser game dernière génération, billard et brasserie. Bons plans toute la semaine.">
+<meta property="og:url" content="https://boulesetbillesgranville.fr/">
+<meta property="og:image" content="https://boulesetbillesgranville.fr/assets/img/bowling-granville.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#080608;
-    --bg-2:#140c0e;
-    --surface:rgba(255,255,255,.035);
-    --surface-2:rgba(255,255,255,.06);
-    --border:rgba(255,255,255,.10);
-    --border-strong:rgba(255,255,255,.18);
-    --ink:#fbf3f3;
-    --muted:#c0a3a6;
-    --muted-2:#8c6f72;
-    --red:#ff2e3e;
-    --red-soft:#ff8088;
-    --red-deep:#c30f22;
-    --ember:#ff6a2f;
-    --gold:#ffc24b;
-    --gold-soft:#ffdc92;
-    --grad:linear-gradient(120deg,var(--red),#ff4a2f 50%,var(--gold));
-    --radius:22px;
-    --maxw:1180px;
-    --shadow:0 30px 70px -30px rgba(0,0,0,.85);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Sora',system-ui,sans-serif;
-    line-height:1.65;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-    position:relative;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    transform:translateZ(0);
-    background:
-      radial-gradient(60% 50% at 12% 8%, rgba(255,46,62,.20), transparent 60%),
-      radial-gradient(55% 50% at 88% 18%, rgba(255,106,47,.15), transparent 60%),
-      radial-gradient(70% 60% at 50% 110%, rgba(255,194,75,.12), transparent 60%);
-  }
-  body::after{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;
-    transform:translateZ(0);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:1}
-
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  ::selection{background:var(--red);color:#fff}
-
-  h1,h2,h3,.brand-name,.eyebrow,.tab,.btn,.stat-num,.block-title,.day-tag,.deal-price{font-family:'Unbounded',sans-serif}
-
-  /* ============ NAV ============ */
-  header.nav{
-    position:sticky;top:0;z-index:60;
-    background:linear-gradient(180deg,rgba(10,7,9,.97),rgba(10,7,9,.9));
-    border-bottom:1px solid var(--border);
-  }
-  .nav-inner{
-    max-width:var(--maxw);margin:0 auto;padding:14px 24px;
-    display:flex;align-items:center;gap:14px;
-  }
-  .brand{display:flex;align-items:center;gap:13px;flex:1 1 0;min-width:0}
-  .brand-logo{height:46px;width:auto;filter:drop-shadow(0 4px 14px rgba(255,46,62,.5))}
-  .brand-fallback{
-    height:46px;width:46px;border-radius:13px;background:var(--grad);
-    display:none;align-items:center;justify-content:center;
-    font-family:'Unbounded';font-weight:900;font-size:1.2rem;color:#fff;
-  }
-  .brand-txt{display:flex;flex-direction:column;line-height:1}
-  .brand-name{font-weight:800;font-size:1.02rem;letter-spacing:.5px}
-  .brand-name b{color:var(--red)}
-  .brand-sub{font-size:.66rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:4px;font-family:'Sora'}
-
-  .tabs{display:flex;gap:4px;flex:0 1 auto;justify-content:center;overflow-x:auto;scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .nav-end{flex:1 1 0;min-width:0;display:flex;justify-content:flex-end}
-  .tab{
-    border:1px solid transparent;background:transparent;color:var(--muted);
-    font-size:.8rem;font-weight:600;letter-spacing:.2px;
-    padding:10px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;
-    transition:.25s;position:relative;
-  }
-  .tab:hover{color:var(--ink);background:var(--surface)}
-  .tab::after{content:"";position:absolute;left:50%;bottom:5px;height:2px;width:0;border-radius:2px;background:var(--gold);opacity:0;transform:translateX(-50%);transition:width .4s cubic-bezier(.16,1,.3,1),opacity .4s}
-  .tab:hover::after{width:40%;opacity:.65}
-  .tab[aria-selected="true"]::after{width:0;opacity:0}
-  .tab:active{transform:scale(.96)}
-  .tab[aria-selected="true"]{
-    color:#fff;border-color:rgba(255,46,62,.55);
-    background:linear-gradient(180deg,rgba(255,46,62,.26),rgba(255,106,47,.16));
-    box-shadow:0 0 0 1px rgba(255,46,62,.3),0 8px 24px -10px rgba(255,46,62,.8);
-  }
-  .nav-cta{
-    flex-shrink:0;display:inline-flex;align-items:center;gap:8px;
-    padding:10px 14px;border-radius:999px;font-family:'Unbounded';font-weight:600;
-    font-size:.78rem;background:var(--grad);color:#fff;
-    transition:.25s;box-shadow:0 10px 26px -10px rgba(255,46,62,.85)
-  }
-  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(255,46,62,1)}
-  .nav-cta svg{width:15px;height:15px}
-
-  /* ============ HERO ============ */
-  .hero{
-    position:relative;overflow:hidden;
-    padding:clamp(70px,11vw,140px) 0 clamp(60px,8vw,110px);
-    border-bottom:1px solid var(--border);
-  }
-  .hero-bg{
-    position:absolute;inset:0;z-index:0;
-    background:linear-gradient(180deg,rgba(8,6,8,.5),rgba(8,6,8,.82) 55%,var(--bg) 100%),
-      url("https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg") center/cover no-repeat;
-    transform:scale(1.05);
-    filter:saturate(1.15);
-  }
-  .hero-bg::after{
-    content:"";position:absolute;inset:0;
-    background:radial-gradient(60% 80% at 80% 0%,rgba(255,194,75,.22),transparent 60%),
-               radial-gradient(55% 75% at 5% 100%,rgba(255,46,62,.32),transparent 60%);
-    mix-blend-mode:screen;
-  }
-  .hero .wrap{display:grid;gap:28px;max-width:var(--maxw)}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:10px;width:fit-content;
-    font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--red-soft);
-    padding:8px 16px;border:1px solid rgba(255,46,62,.4);border-radius:999px;
-    background:rgba(255,46,62,.08);font-weight:600;
-  }
-  .pulse{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 14px var(--red);animation:pulse 1.6s infinite}
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.6)}}
-  .hero h1{
-    font-weight:900;line-height:.96;letter-spacing:-1px;
-    font-size:clamp(2.6rem,7vw,5.4rem);
-    text-shadow:0 0 50px rgba(255,46,62,.45);
-  }
-  .hero h1 .neon{
-    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 0 26px rgba(255,106,47,.55));
-  }
-  .hero p.lead{font-size:clamp(1.05rem,2.2vw,1.32rem);color:var(--muted);max-width:620px}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
-    font-weight:600;font-size:.9rem;letter-spacing:.3px;
-    padding:16px 28px;border-radius:14px;transition:.28s;
-  }
-  .btn svg{width:17px;height:17px;transition:.28s}
-  .btn-primary{background:var(--grad);color:#fff;background-size:160% 160%;
-    box-shadow:0 18px 40px -16px rgba(255,46,62,.9)}
-  .btn-primary:hover{background-position:100% 0;transform:translateY(-3px)}
-  .btn-primary:hover svg{transform:translateX(4px)}
-  .btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--border-strong)}
-  .btn-ghost:hover{background:rgba(255,255,255,.12);transform:translateY(-3px)}
-
-  .hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
-  .chip{
-    display:flex;align-items:center;gap:10px;padding:13px 18px;border-radius:14px;
-    background:var(--surface);border:1px solid var(--border);font-size:.85rem;color:var(--muted)
-  }
-  .chip b{color:var(--ink);font-family:'Unbounded';font-weight:700}
-  .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
-
-  /* ============ MARQUEE ============ */
-  .marquee{
-    border-bottom:1px solid var(--border);overflow:hidden;
-    background:linear-gradient(90deg,rgba(255,46,62,.09),rgba(255,194,75,.08));
-    padding:16px 0;white-space:nowrap;
-  }
-  .marquee-track{display:inline-flex;gap:34px;animation:scroll 28s linear infinite;will-change:transform}
-  .marquee-track span{font-family:'Unbounded';font-weight:700;font-size:1rem;letter-spacing:1px;color:var(--ink);opacity:.85;display:inline-flex;align-items:center;gap:34px}
-  .marquee-track span::after{content:"●";color:var(--red);font-size:.6rem}
-  @keyframes scroll{to{transform:translateX(-50%)}}
-
-  /* ============ PANELS ============ */
-  #panels{scroll-margin-top:90px;padding:clamp(56px,8vw,96px) 0;position:relative}
-  .panel{display:none}
-  .panel.active{display:block;animation:panelIn .8s cubic-bezier(.16,1,.3,1) both}
-  @keyframes panelIn{from{opacity:0;transform:translateY(20px) scale(.992);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
-
-  /* luxe light sweep on tab change */
-  .panel-sheen{position:absolute;inset:0;z-index:5;overflow:hidden;pointer-events:none}
-  .sheen-bar{position:absolute;top:-20%;left:0;width:45%;height:140%;opacity:0;filter:blur(5px);
-    background:linear-gradient(105deg,transparent,rgba(255,221,146,.16) 45%,rgba(255,138,47,.09) 60%,transparent);
-    transform:skewX(-16deg) translateX(-260%)}
-
-  /* luxe title reveal */
-  .panel.active .section-head h2{animation:titleWipe .95s cubic-bezier(.16,1,.3,1) both}
-  @keyframes titleWipe{from{clip-path:inset(0 100% 0 0);opacity:0;letter-spacing:3px}to{clip-path:inset(0 0 0 0);opacity:1;letter-spacing:-.5px}}
-  .panel.active .reveal{animation:fadeUp .85s cubic-bezier(.16,1,.3,1) both}
-  .panel.active .reveal:nth-child(2){animation-delay:.06s}
-  .panel.active .reveal:nth-child(3){animation-delay:.12s}
-  .panel.active .reveal:nth-child(4){animation-delay:.18s}
-  .panel.active .reveal:nth-child(5){animation-delay:.24s}
-  .panel.active .reveal:nth-child(6){animation-delay:.30s}
-  .panel.active .reveal:nth-child(7){animation-delay:.36s}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-
-  .section-head{max-width:680px;margin-bottom:46px}
-  .kicker{font-size:.74rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:16px;display:inline-block;font-family:'Unbounded'}
-  .kicker.m{color:var(--red)} .kicker.c{color:var(--ember)} .kicker.a{color:var(--gold)} .kicker.v{color:var(--red)}
-  .section-head h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.02;letter-spacing:-.5px}
-  .section-head p{color:var(--muted);font-size:1.05rem;margin-top:18px}
-
-  .block-title{font-weight:800;font-size:clamp(1.3rem,2.6vw,1.85rem);margin:56px 0 26px;display:flex;align-items:center;gap:14px;letter-spacing:-.3px}
-  .block-title::before{content:"";width:34px;height:5px;border-radius:5px;background:var(--grad);flex-shrink:0}
-  .block-title.first{margin-top:6px}
-
-  /* feature rows */
-  .feature{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;margin-bottom:64px}
-  .feature:nth-child(even){grid-template-columns:1fr 1.05fr}
-  .feature:nth-child(even) .feature-media{order:-1}
-  .feature-media{
-    position:relative;border-radius:var(--radius);overflow:hidden;
-    aspect-ratio:4/3;border:1px solid var(--border);box-shadow:var(--shadow);
-    background:linear-gradient(135deg,rgba(255,46,62,.42),rgba(255,106,47,.35),rgba(255,194,75,.4));
-  }
-  .feature-media img,.feature-media svg.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s ease}
-  .feature-media:hover img,.feature-media:hover svg.scene{transform:scale(1.05)}
-  .feature-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,6,8,.5))}
-  .media-tag{
-    position:absolute;top:16px;left:16px;z-index:2;font-family:'Unbounded';font-weight:700;
-    font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;
-    padding:8px 14px;border-radius:999px;background:rgba(8,6,8,.82);border:1px solid var(--border-strong)
-  }
-  .feature-body h3{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;line-height:1.1;margin-bottom:16px}
-  .feature-body h3 em{font-style:normal;color:var(--red)}
-  .feature-body p{color:var(--muted);margin-bottom:18px}
-  .tick-list{list-style:none;display:grid;gap:11px;margin:8px 0 26px}
-  .tick-list li{display:flex;gap:12px;align-items:flex-start;font-size:.94rem;color:var(--ink)}
-  .tick-list svg{width:20px;height:20px;flex-shrink:0;margin-top:2px}
-  .price-pill{display:inline-flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-  .price-pill span{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:10px 15px;font-size:.85rem;color:var(--ink)}
-  .price-pill span b{font-family:'Unbounded';color:var(--gold-soft)}
-
-  /* card grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
-  .card{
-    position:relative;border:1px solid var(--border);border-radius:var(--radius);
-    padding:30px;background:var(--surface);overflow:hidden;transition:.35s;display:flex;flex-direction:column;
-  }
-  .card::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s}
-  .card:hover{transform:translateY(-7px);border-color:var(--border-strong);background:var(--surface-2);box-shadow:var(--shadow)}
-  .card:hover::after{transform:scaleX(1)}
-  .card-icon{
-    width:54px;height:54px;border-radius:15px;display:flex;align-items:center;justify-content:center;
-    margin-bottom:20px;background:linear-gradient(135deg,rgba(255,46,62,.22),rgba(255,194,75,.18));
-    border:1px solid var(--border-strong)
-  }
-  .card-icon svg{width:26px;height:26px}
-  .card h3{font-size:1.22rem;font-weight:700;margin-bottom:11px;font-family:'Unbounded'}
-  .card p{color:var(--muted);font-size:.92rem;margin-bottom:18px}
-  .card-link{display:inline-flex;align-items:center;gap:8px;color:var(--gold-soft);font-weight:600;font-size:.85rem;cursor:pointer;margin-top:auto}
-  .card-link svg{width:15px;height:15px;transition:.25s}
-  .card:hover .card-link svg{transform:translateX(4px)}
-
-  /* promo / deal card */
-  .card.promo{border-top:1px solid var(--border)}
-  .day-tag{
-    align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
-    font-weight:700;font-size:.66rem;letter-spacing:1.2px;text-transform:uppercase;color:#fff;
-    padding:7px 13px;border-radius:999px;background:linear-gradient(120deg,var(--red),var(--ember));
-    box-shadow:0 8px 20px -8px rgba(255,46,62,.85);margin-bottom:16px
-  }
-  .card.promo h3{font-size:1.18rem;margin-bottom:9px}
-  .deal-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px;border-top:1px solid var(--border)}
-  .deal-price{font-weight:800;font-size:1.45rem;line-height:1.05;color:var(--gold-soft)}
-  .deal-price small{display:block;font-family:'Sora';font-weight:400;font-size:.68rem;color:var(--muted-2);letter-spacing:.3px;margin-top:5px}
-
-  .badge-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:48px;padding:24px;border:1px dashed var(--border-strong);border-radius:var(--radius);background:var(--surface);align-items:center}
-  .badge-row .bi{display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--ink)}
-  .badge-row .bi svg{width:26px;height:26px;color:var(--gold)}
-  .badge-row .bi b{font-family:'Unbounded';font-weight:700}
-
-  /* ============ TARIFS BOWLING (grille) ============ */
-  .price-block{margin:6px 0 60px}
-  .price-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch}
-  table.tarifs{border-collapse:separate;border-spacing:0;width:100%;min-width:640px}
-  table.tarifs th,table.tarifs td{text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
-  table.tarifs thead th{padding:14px 4px 12px;font-family:'Sora';font-weight:600;font-size:.72rem;color:var(--muted);letter-spacing:.3px}
-  table.tarifs thead th:first-child{text-align:left;padding-left:20px}
-  table.tarifs .th-scale{padding:16px 4px 12px}
-  table.tarifs .th-scale .scale{display:flex;justify-content:space-between;align-items:center}
-  table.tarifs .th-scale .scale span{white-space:nowrap}
-  table.tarifs tbody th{padding:0 16px;text-align:left;font-family:'Sora';font-weight:600;font-size:.84rem;color:var(--ink);white-space:nowrap;border-right:1px solid rgba(255,255,255,.08)}
-  table.tarifs tbody th small{display:block;font-weight:400;font-size:.66rem;color:var(--muted-2);letter-spacing:.2px;margin-top:1px}
-  table.tarifs td{height:40px;font-family:'Unbounded';font-weight:700;font-size:.78rem;color:#0c0809}
-  table.tarifs tbody tr:last-child th,table.tarifs tbody tr:last-child td{border-bottom:none}
-  .c-g{background:linear-gradient(180deg,#46c46e,#37b160)}
-  .c-o{background:linear-gradient(180deg,#ffa83a,#ff8f2f)}
-  .c-r{background:linear-gradient(180deg,#ff5a4a,#ff2e3e);color:#fff}
-  .c-x{background:repeating-linear-gradient(45deg,rgba(255,255,255,.02),rgba(255,255,255,.02) 6px,transparent 6px,transparent 12px)}
-  .price-legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;align-items:center}
-  .price-legend .lg{display:inline-flex;align-items:center;gap:9px;font-size:.86rem;color:var(--ink)}
-  .price-legend .sw{width:20px;height:20px;border-radius:6px;flex-shrink:0}
-  .price-legend .lg b{font-family:'Unbounded'}
-  .price-notes{margin-top:16px;font-size:.8rem;color:var(--muted);line-height:1.7}
-  .price-notes b{color:var(--ink);font-weight:600}
-
-  /* ============ ANNIVERSAIRES ============ */
-  .anniv-incl{list-style:none;display:grid;gap:9px;margin:2px 0 0}
-  .anniv-incl li{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--ink)}
-  .anniv-incl svg{width:17px;height:17px;flex-shrink:0;margin-top:2px;color:var(--gold)}
-  .card.promo .anniv-incl{margin-bottom:4px}
-  .from-price{font-weight:800;font-size:1.32rem;line-height:1.05;color:var(--gold-soft);font-family:'Unbounded'}
-  .from-price span{display:block;font-family:'Sora';font-weight:400;font-size:.66rem;color:var(--muted-2);letter-spacing:.3px;margin-top:5px}
-  .from-price em{font-style:normal;font-weight:400;font-size:.62em;color:var(--muted)}
-  .anniv-cta{margin-top:44px;padding:clamp(26px,4vw,38px);border:1px solid var(--border-strong);border-radius:var(--radius);background:linear-gradient(180deg,var(--surface-2),var(--surface));display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
-  .anniv-cta .perks{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px}
-  .anniv-cta .perk{display:inline-flex;align-items:center;gap:10px;font-size:.92rem;color:var(--ink)}
-  .anniv-cta .perk svg{width:21px;height:21px;color:var(--gold);flex-shrink:0}
-  .anniv-cta .perk b{font-weight:700;color:#fff}
-
-  /* ============ CONTACT ============ */
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
-  .info-stack{display:grid;gap:16px}
-  .info-card{display:flex;gap:18px;align-items:flex-start;padding:22px;border-radius:18px;background:var(--surface);border:1px solid var(--border);transition:.3s}
-  .info-card:hover{border-color:var(--border-strong);background:var(--surface-2)}
-  .info-card .ico{width:48px;height:48px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,46,62,.24),rgba(255,106,47,.22));border:1px solid var(--border-strong)}
-  .info-card .ico svg{width:22px;height:22px}
-  .info-card .label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px}
-  .info-card .val{font-weight:600;font-size:1rem;line-height:1.45}
-  .info-card .val a:hover{color:var(--gold-soft)}
-
-  .hours{padding:24px;border-radius:18px;background:var(--surface);border:1px solid var(--border)}
-  .hours h4{font-family:'Unbounded';font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-  .hours h4 svg{width:18px;height:18px;color:var(--gold)}
-  .hours ul{list-style:none;display:grid;gap:2px}
-  .hours li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem}
-  .hours li:last-child{border:none}
-  .hours li span:first-child{color:var(--muted)}
-  .hours li span:last-child{font-weight:600;color:var(--ink)}
-  .hours .note{font-size:.78rem;color:var(--muted-2);margin-top:12px;font-style:italic}
-
-  .form-card{padding:30px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border)}
-  .form-card h3{font-family:'Unbounded';font-size:1.3rem;margin-bottom:6px}
-  .form-card .sub{color:var(--muted);font-size:.9rem;margin-bottom:24px}
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:.76rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-  .field input,.field textarea{
-    width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:12px;
-    padding:14px 16px;color:var(--ink);font-family:'Sora';font-size:.95rem;transition:.25s;resize:vertical
-  }
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(255,46,62,.16);background:rgba(0,0,0,.5)}
-  .field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
-  .form-card .btn{width:100%;justify-content:center;margin-top:6px}
-  .form-note{font-size:.74rem;color:var(--muted-2);text-align:center;margin-top:14px}
-
-  .map-wrap{margin-top:34px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);position:relative}
-  .map-wrap iframe{width:100%;height:380px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
-
-  /* ============ FOOTER ============ */
-  footer{border-top:1px solid var(--border);padding:60px 0 36px;margin-top:40px;position:relative;z-index:1;background:linear-gradient(180deg,transparent,rgba(255,46,62,.05))}
-  .foot-top{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:40px}
-  .foot-brand{max-width:340px}
-  .foot-brand .brand{margin-bottom:16px}
-  .foot-brand p{color:var(--muted);font-size:.9rem}
-  .foot-cols{display:flex;gap:60px;flex-wrap:wrap}
-  .foot-col h5{font-family:'Unbounded';font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-  .foot-col a,.foot-col span{display:block;color:var(--ink);font-size:.9rem;margin-bottom:11px;cursor:pointer;transition:.2s;opacity:.85}
-  .foot-col a:hover{opacity:1;color:var(--gold-soft)}
-  .socials{display:flex;gap:12px}
-  .socials a{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--surface-2);border:1px solid var(--border);transition:.25s}
-  .socials a:hover{background:var(--grad);transform:translateY(-3px)}
-  .socials svg{width:19px;height:19px}
-  .foot-bottom{padding-top:26px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
-  .foot-bottom p{font-size:.78rem;color:var(--muted-2)}
-  .legal{font-size:.72rem;color:var(--muted-2);line-height:1.6;margin-top:6px;max-width:760px}
-
-  /* ============ RESPONSIVE ============ */
-  @media(max-width:1080px){
-    .nav-inner{flex-wrap:wrap;gap:12px 16px}
-    .tabs{order:3;width:100%;justify-content:center;padding-bottom:2px}
-  }
-  @media(max-width:900px){
-    .brand-sub{display:none}
-    .feature,.feature:nth-child(even){grid-template-columns:1fr;gap:28px}
-    .feature:nth-child(even) .feature-media{order:0}
-    .contact-grid{grid-template-columns:1fr}
-  }
-  @media(max-width:640px){
-    .wrap{padding:0 18px}
-    .nav-inner{padding:12px 18px}
-    .tabs{justify-content:flex-start}
-    .nav-cta .lbl{display:none}
-    .nav-cta{padding:10px 12px}
-    .brand-logo,.brand-fallback{height:40px}
-    .hero-actions{flex-direction:column;align-items:stretch}
-    .btn{justify-content:center}
-    .foot-cols{gap:36px}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    html{scroll-behavior:auto}
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Bangers&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BowlingAlley",
+  "name":"Boules et Billes",
+  "description":"Le complexe de jeux de Granville : 8 pistes de bowling, laser game dernière génération, billard et brasserie.",
+  "url":"https://boulesetbillesgranville.fr/",
+  "image":["https://boulesetbillesgranville.fr/assets/img/bowling-granville.jpg","https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg"],
+  "logo":"https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png",
+  "telephone":"+33233917677",
+  "email":"contact@boulesetbilles.fun",
+  "priceRange":"5 € – 20 €",
+  "paymentAccepted":"Chèques Vacances ANCV",
+  "address":{"@type":"PostalAddress","streetAddress":"511 rue du Conillot","postalCode":"50400","addressLocality":"Granville","addressCountry":"FR"},
+  "geo":{"@type":"GeoCoordinates","latitude":48.84045,"longitude":-1.56215},
+  "openingHoursSpecification":[
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday"],"opens":"14:00","closes":"01:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Friday","Saturday"],"opens":"14:00","closes":"02:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"14:00","closes":"00:00"}
+  ],
+  "sameAs":["https://www.facebook.com/boulesetbilles/"]
+}
+</script>
+<script>(function(){var d=document.documentElement,s=false;try{s=matchMedia('(prefers-reduced-motion: reduce)').matches||localStorage.getItem('bb-motion')==='off'}catch(e){}if(!('WebGLRenderingContext' in window))s=true;d.classList.add(s?'xp-static':'xp-live')})();</script>
+<noscript><style>.xp{height:auto!important}.xp-sticky{position:relative!important;height:auto!important}.xp-ch{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important}</style></noscript>
+<noscript><style>.panel{display:block!important}.js-only{display:none!important}</style></noscript>
 </head>
 <body>
+<a class="skip" href="#essentiel">Aller aux infos pratiques</a>
+<a class="skip" href="#panels">Aller au contenu</a>
 
 <!-- ============ NAV ============ -->
-<header class="nav">
+<header class="nav" id="site-header">
   <div class="nav-inner">
     <a href="#top" class="brand" onclick="showTab('activites');return false;">
-      <img class="brand-logo" src="https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png" alt="Boules et Billes" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="brand-logo" src="https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png" alt="Boules et Billes" width="46" height="46" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="brand-fallback">B&amp;B</div>
       <div class="brand-txt">
         <span class="brand-name">BOULES <b>et</b> BILLES</span>
@@ -422,44 +65,171 @@
     </a>
 
     <nav class="tabs" role="tablist" aria-label="Navigation principale">
-      <button class="tab" role="tab" aria-selected="true" data-tab="activites" onclick="showTab('activites')">Activités</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="bar" onclick="showTab('bar')">Bar &amp; Resto</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="offres" onclick="showTab('offres')">Offres</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="anniv" onclick="showTab('anniv')">Anniversaires</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="contact" onclick="showTab('contact')">Contact</button>
+      <span class="tab-indicator" aria-hidden="true"><i></i></span>
+      <button class="tab" role="tab" id="tab-activites" aria-controls="activites" aria-selected="true" data-tab="activites" onclick="showTab('activites')">Activités</button>
+      <button class="tab" role="tab" id="tab-bar" aria-controls="bar" aria-selected="false" data-tab="bar" onclick="showTab('bar')">Bar &amp; Resto</button>
+      <button class="tab" role="tab" id="tab-offres" aria-controls="offres" aria-selected="false" data-tab="offres" onclick="showTab('offres')">Offres</button>
+      <button class="tab" role="tab" id="tab-anniv" aria-controls="anniv" aria-selected="false" data-tab="anniv" onclick="showTab('anniv')">Anniversaires</button>
+      <button class="tab" role="tab" id="tab-contact" aria-controls="contact" aria-selected="false" data-tab="contact" onclick="showTab('contact')">Contact</button>
     </nav>
 
     <div class="nav-end">
-      <a class="nav-cta" href="tel:+33233917677">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <button class="search-trigger magnetic js-only" type="button" data-open-search aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" aria-label="Rechercher (Ctrl + K)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span class="lbl">Rechercher</span>
+        <kbd class="kbd" data-mod>Ctrl K</kbd>
+      </button>
+      <a class="nav-cta magnetic" href="tel:+33233917677">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span class="lbl">02 33 91 76 77</span>
       </a>
     </div>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="wrap">
-    <span class="eyebrow"><span class="pulse"></span> Complexe de jeux · 511 rue du Conillot, Granville</span>
-    <h1>Le terrain de jeu<br>de <span class="neon">Granville</span></h1>
-    <p class="lead">Bowling, laser game dernière génération, billard et brasserie : une seule adresse pour s'amuser entre amis, en famille ou en équipe — jusque tard dans la nuit.</p>
-    <div class="hero-actions">
-      <button class="btn btn-primary" onclick="showTab('activites')">
-        Découvrir les activités
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-      <button class="btn btn-ghost" onclick="showTab('offres')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
-        Voir les bons plans
-      </button>
+<!-- ============ EXPERIENCE (scroll-driven 3D) ============ -->
+<section class="xp xp-bowling" id="top" aria-label="Présentation de Boules et Billes">
+  <div class="xp-sticky">
+    <canvas class="xp-canvas" aria-hidden="true"></canvas>
+    <div class="xp-poster" aria-hidden="true"></div>
+    <div class="xp-vignette" aria-hidden="true"></div>
+
+    <div class="xp-chapters">
+      <div class="xp-ch xp-ch-hero" data-from="0" data-to="0.13">
+        <span class="eyebrow"><span class="pulse"></span> Complexe de jeux · 511 rue du Conillot, Granville</span>
+        <h1>Le terrain de jeu<br>de <span class="neon">Granville</span></h1>
+        <p class="lead">Bowling, laser game dernière génération, billard et brasserie : une seule adresse pour s'amuser entre amis, en famille ou en équipe — jusque tard dans la nuit.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary magnetic" onclick="showTab('activites')">
+            Découvrir les activités
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="btn btn-ghost magnetic" onclick="showTab('offres')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
+            Voir les bons plans
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="chip"><span class="dot"></span><b>8</b>&nbsp;pistes de bowling</div>
+          <div class="chip"><span class="dot"></span>Laser game <b>300&nbsp;m²</b></div>
+          <div class="chip"><span class="dot"></span>Ouvert <b>jusqu'à 2h</b> le week-end</div>
+          <div class="chip"><span class="dot"></span>Dès <b>4 ans</b></div>
+        </div>
+      </div>
+
+      <div class="xp-ch xp-ch-side" data-from="0.17" data-to="0.42">
+        <span class="xp-label">( 01 — Bowling )</span>
+        <p class="xp-title">8 pistes.<br><em>Une trajectoire.</em></p>
+        <p class="xp-text">Débutants, enfants dès 4 ans ou joueurs confirmés : clubs, ligues et pros trouvent tous leur piste au cœur du bowling de Granville.</p>
+      </div>
+
+      <div class="xp-ch xp-ch-caption" data-from="0.545" data-to="0.66">
+        <p class="xp-text">Lance-boules pour les plus petits · billard anglais, babyfoots &amp; jeux vidéo</p>
+      </div>
+
+      <div class="xp-ch xp-ch-side xp-right" data-from="0.82" data-to="1.01">
+        <span class="xp-label">( Salle suivante )</span>
+        <p class="xp-title">Entrez dans<br><em>l'arène.</em></p>
+        <p class="xp-text">Continuez de défiler : le laser game vous attend derrière cette porte.</p>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="chip"><span class="dot"></span><b>8</b>&nbsp;pistes de bowling</div>
-      <div class="chip"><span class="dot"></span>Laser game <b>300&nbsp;m²</b></div>
-      <div class="chip"><span class="dot"></span>Ouvert <b>jusqu'à 2h</b> le week-end</div>
-      <div class="chip"><span class="dot"></span>Dès <b>4 ans</b></div>
+
+    <!-- comic-book bubbles anchored to the 3D action (decorative) -->
+    <div class="bd-layer js-only" aria-hidden="true">
+      <div class="bd bd-burst bd-sm bd-red" data-bubble="crash" data-from="0.521" data-to="0.565"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Badaboum&nbsp;!</span></span></div>
+      <div class="bd bd-burst bd-xl" data-bubble="strike" data-from="0.535" data-to="0.668"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Strike&nbsp;!</span><b class="bd-spark s1">✦</b><b class="bd-spark s2">✦</b><b class="bd-spark s3">✦</b></span></div>
+    </div>
+
+    <div class="xp-hud js-only">
+      <a class="xp-pill" href="#essentiel" data-goto="essentiel"><span class="xp-dot"></span><span class="xp-status-txt">Horaires &amp; infos</span><span class="xp-sep">·</span><span class="xp-tel">02 33 91 76 77</span></a>
+      <div class="xp-progress" aria-hidden="true"><span class="xp-count">01 / 05</span><span class="xp-track"><i></i></span><span class="xp-hint">Faites défiler</span></div>
+      <a class="xp-skip" href="#essentiel">Passer l'animation <span aria-hidden="true">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE 2 : LASER GAME (black light) ============ -->
+<section class="xp xp-laser" id="arene" aria-label="Le laser game en lumière noire">
+  <div class="xp-sticky">
+    <canvas class="xp-canvas" aria-hidden="true"></canvas>
+    <div class="xp-poster" aria-hidden="true"></div>
+    <div class="xp-vignette" aria-hidden="true"></div>
+
+    <div class="xp-chapters">
+      <div class="xp-ch xp-ch-side" data-from="0" data-to="0.15">
+        <span class="xp-label">( 02 — Laser game )</span>
+        <p class="xp-title">Lumière noire.<br><em>Entrez.</em></p>
+        <p class="xp-text">Une salle de 300 m², labyrinthique et futuriste, équipée d'un matériel de toute dernière génération pour des tirs d'une précision redoutable.</p>
+      </div>
+
+      <div class="xp-ch xp-ch-side xp-right" data-from="0.26" data-to="0.41">
+        <span class="xp-label">( 300 m² d'arène )</span>
+        <p class="xp-title">Deux équipes.<br><em>Aucune pitié.</em></p>
+        <p class="xp-text">9&nbsp;€ les 20 min · 11&nbsp;€ les 30 min · 15&nbsp;€ les 2 × 20 min.</p>
+      </div>
+
+      <div class="xp-ch xp-ch-caption" data-from="0.5" data-to="0.64">
+        <p class="xp-text">Des pièges, des cachettes : gardez votre sang-froid et marquez un maximum de points !</p>
+      </div>
+
+      <div class="xp-ch xp-ch-final" data-from="0.9" data-to="1.01">
+        <figure class="xp-photo" aria-hidden="true"><div class="hero-bg"></div></figure>
+        <div>
+          <span class="xp-label">( 03 — Et après la partie )</span>
+          <p class="xp-title">Brasserie, anniversaires,<br><em>bons plans.</em></p>
+          <div class="hero-actions">
+            <button class="btn btn-primary magnetic" onclick="showTab('bar')">Bar &amp; Resto</button>
+            <button class="btn btn-ghost magnetic" onclick="showTab('anniv')">Anniversaires</button>
+            <button class="btn btn-ghost magnetic" onclick="showTab('offres')">Offres</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- comic-book bubbles anchored to the 3D action (decorative) -->
+    <div class="bd-layer js-only" aria-hidden="true">
+      <div class="bd bd-burst bd-sm bd-green" data-bubble="piou0" data-from="0.464" data-to="0.49"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Piou&nbsp;!</span></span></div>
+      <div class="bd bd-speech" data-bubble="hit0" data-from="0.47" data-to="0.53"><span class="bd-in"><span class="bd-txt">Touché&nbsp;!</span><b class="bd-spark s1">✦</b><b class="bd-spark s2">✦</b></span></div>
+      <div class="bd bd-burst bd-sm bd-green" data-bubble="piou1" data-from="0.609" data-to="0.635"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Piou&nbsp;!</span></span></div>
+      <div class="bd bd-speech" data-bubble="hit1" data-from="0.615" data-to="0.668"><span class="bd-in"><span class="bd-txt">Bim&nbsp;! Touché&nbsp;!</span><b class="bd-spark s1">✦</b><b class="bd-spark s2">✦</b></span></div>
+      <div class="bd bd-speech bd-speech-red" data-bubble="miss" data-from="0.706" data-to="0.75"><span class="bd-in"><span class="bd-txt">Raté&nbsp;!</span></span></div>
+      <div class="bd bd-burst bd-sm bd-green" data-bubble="piou2" data-from="0.754" data-to="0.78"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Piou&nbsp;!</span></span></div>
+      <div class="bd bd-burst bd-lg" data-bubble="hit2" data-from="0.76" data-to="0.84"><span class="bd-in"><i class="bd-lines"></i><span class="bd-txt">Touché-coulé&nbsp;!</span><b class="bd-spark s1">✦</b><b class="bd-spark s2">✦</b><b class="bd-spark s3">✦</b></span></div>
+    </div>
+
+    <div class="xp-hud js-only">
+      <a class="xp-pill" href="#essentiel" data-goto="essentiel"><span class="xp-dot"></span><span class="xp-status-txt">Horaires &amp; infos</span><span class="xp-sep">·</span><span class="xp-tel">02 33 91 76 77</span></a>
+      <div class="xp-progress" aria-hidden="true"><span class="xp-count">01 / 04</span><span class="xp-track"><i></i></span><span class="xp-hint">Faites défiler</span></div>
+      <a class="xp-skip" href="#essentiel">Passer l'animation <span aria-hidden="true">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESSENTIEL (infos pratiques, toujours statiques) ============ -->
+<section class="essentiel practical" id="essentiel" aria-labelledby="essentiel-title">
+  <div class="wrap">
+    <h2 class="sr-only" id="essentiel-title">Infos pratiques</h2>
+    <div class="ess-grid">
+      <div class="ess-tile ess-status">
+        <span class="ess-label">Aujourd'hui</span>
+        <p class="ess-value" id="open-status" aria-live="polite">Mar – Jeu 14h–1h · Ven – Sam 14h–2h · Dim 14h–0h</p>
+        <a class="ess-link" href="#contact" data-goto="contact-hours">Tous les horaires</a>
+      </div>
+      <div class="ess-tile">
+        <span class="ess-label">Adresse</span>
+        <p class="ess-value">511 rue du Conillot, 50400 Granville</p>
+        <a class="ess-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=511+rue+du+Conillot+50400+Granville" target="_blank" rel="noopener">Itinéraire</a>
+      </div>
+      <div class="ess-tile">
+        <span class="ess-label">Réserver</span>
+        <p class="ess-value"><a href="tel:+33233917677">02 33 91 76 77</a></p>
+        <a class="ess-link" href="mailto:contact@boulesetbilles.fun">contact@boulesetbilles.fun</a>
+      </div>
+      <div class="ess-tile">
+        <span class="ess-label">Tarifs</span>
+        <p class="ess-value">Bowling dès 5&nbsp;€ · Laser dès 9&nbsp;€</p>
+        <a class="ess-link" href="#activites" data-goto="tarifs-bowling">Grille complète</a>
+      </div>
     </div>
   </div>
 </section>
@@ -473,57 +243,59 @@
 </div>
 
 <!-- ============ PANELS ============ -->
-<main id="panels">
-  <div class="panel-sheen" aria-hidden="true"><span class="sheen-bar"></span></div>
+<main id="panels" tabindex="-1">
   <div class="wrap">
 
     <!-- ===== ACTIVITÉS ===== -->
-    <section class="panel active" id="activites" role="tabpanel">
+    <section class="panel active" id="activites" role="tabpanel" aria-labelledby="tab-activites">
       <div class="section-head reveal">
         <span class="kicker m">Nos activités</span>
         <h2>De quoi vibrer à chaque visite</h2>
         <p>Un complexe de jeux dernière génération, pensé pour tous les âges et tous les niveaux. Choisissez votre terrain.</p>
       </div>
 
-      <div class="feature reveal">
+      <article class="feature reveal" id="bowling" data-search-cat="activites" data-search-keys="bowling pistes quilles enfants club ligue billard babyfoot jeux video">
         <div class="feature-body">
           <h3><em>Bowling</em> — 8 pistes pour tous les niveaux</h3>
           <p>Notre salle s'adapte à tous les styles de jeu : débutants, enfants dès 4 ans ou joueurs confirmés (clubs, ligues et pros). Vous trouverez toujours votre place au cœur du bowling de Granville.</p>
           <ul class="tick-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 8 pistes professionnelles</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Lance-boules pour les plus petits</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Billard anglais (8 pool), babyfoots & jeux vidéo</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 8 pistes professionnelles</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Lance-boules pour les plus petits</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Billard anglais (8 pool), babyfoots & jeux vidéo</li>
           </ul>
-          <a class="btn btn-primary" href="tel:+33233917677">Réserver une piste
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-primary magnetic" href="tel:+33233917677">Réserver une piste
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <div class="feature-media">
           <span class="media-tag">Bowling</span>
-          <img src="https://boulesetbilles.fun/wp-content/uploads/2018/11/salle-de-bowling-et-jeux.jpg" alt="Salle de bowling de Granville : pistes et panneaux de pistes" loading="lazy" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2018/11/2-1024x498.jpg'">
+          <picture>
+            <source type="image/webp" srcset="assets/img/bowling-granville-800.webp 800w, assets/img/bowling-granville.webp 1600w" sizes="(max-width: 900px) 100vw, 560px">
+            <img src="assets/img/bowling-granville-800.jpg" srcset="assets/img/bowling-granville-800.jpg 800w, assets/img/bowling-granville.jpg 1600w" sizes="(max-width: 900px) 100vw, 560px" width="800" height="600" alt="Salle de bowling de Granville : pistes et panneaux de pistes" loading="lazy" decoding="async" data-legacy-src="https://boulesetbilles.fun/wp-content/uploads/2018/11/salle-de-bowling-et-jeux.jpg" onerror="this.onerror=function(){this.hidden=true};this.src='https://boulesetbilles.fun/wp-content/uploads/2018/11/2-1024x498.jpg'">
+          </picture>
         </div>
-      </div>
+      </article>
 
-      <div class="feature reveal">
+      <article class="feature reveal" id="laser-game" data-search-cat="activites" data-search-keys="laser game lasergame arene equipe tir prix 20 30 minutes">
         <div class="feature-body">
           <h3><em>Laser Game</em> — l'immersion dernière génération</h3>
           <p>Une salle de 300 m², labyrinthique et futuriste, équipée d'un matériel de toute dernière génération pour des tirs d'une précision redoutable. Deux équipes, des pièges, des cachettes : gardez votre sang-froid et marquez un maximum de points !</p>
-          <div class="price-pill">
+          <div class="price-pill practical">
             <span><b>9 €</b> · 20 min</span>
             <span><b>11 €</b> · 30 min</span>
             <span><b>15 €</b> · 2 × 20 min</span>
           </div>
-          <a class="btn btn-primary" href="tel:+33233917677">Embarquer dans l'arène
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-primary magnetic" href="tel:+33233917677">Embarquer dans l'arène
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <div class="feature-media">
           <span class="media-tag">Laser Game</span>
-          <img src="https://boulesetbilles.fun/wp-content/uploads/2024/02/laser-game-normandie.jpg" alt="Salle de laser game dernière génération à Granville" loading="lazy" onerror="this.onerror=null;this.src='https://boulesetbilles.fun/wp-content/uploads/2024/06/laser-game-de-granville.jpg'">
+          <img src="https://boulesetbilles.fun/wp-content/uploads/2024/02/laser-game-normandie.jpg" alt="Salle de laser game dernière génération à Granville" loading="lazy" decoding="async" onerror="this.onerror=function(){this.hidden=true};this.src='https://boulesetbilles.fun/wp-content/uploads/2024/06/laser-game-de-granville.jpg'">
         </div>
-      </div>
+      </article>
 
-      <div class="price-block reveal">
+      <div class="price-block practical" id="tarifs-bowling" data-search-cat="tarifs" data-search-keys="tarifs prix bowling partie grille heure chaussures location jours feries">
         <h3 class="block-title">Tarifs bowling</h3>
-        <div class="price-wrap">
+        <div class="price-wrap" tabindex="0" aria-label="Grille des tarifs, défilable horizontalement">
           <table class="tarifs" aria-label="Prix d'une partie de bowling selon le jour et l'horaire">
             <thead>
               <tr>
@@ -532,13 +304,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr><th>Lundi<small>vac. &amp; été · 14h–22h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td></tr>
-              <tr><th>Mardi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
-              <tr><th>Mercredi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
-              <tr><th>Jeudi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
-              <tr><th>Vendredi<small>14h–02h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td></tr>
-              <tr><th>Samedi<small>14h–02h</small></th><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td></tr>
-              <tr><th>Dimanche<small>14h–20h</small></th><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td></tr>
+              <tr data-day="1"><th>Lundi<small>vac. &amp; été · 14h–22h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td></tr>
+              <tr data-day="2"><th>Mardi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
+              <tr data-day="3"><th>Mercredi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
+              <tr data-day="4"><th>Jeudi<small>14h–00h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td></tr>
+              <tr data-day="5"><th>Vendredi<small>14h–02h</small></th><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-g">5</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td></tr>
+              <tr data-day="6"><th>Samedi<small>14h–02h</small></th><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td></tr>
+              <tr data-day="0"><th>Dimanche<small>14h–20h</small></th><td class="c-o">6</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-r">7</td><td class="c-o">6</td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td><td class="c-x"></td></tr>
             </tbody>
           </table>
         </div>
@@ -552,20 +324,20 @@
     </section>
 
     <!-- ===== BAR & RESTAURATION ===== -->
-    <section class="panel" id="bar" role="tabpanel">
+    <section class="panel" id="bar" role="tabpanel" aria-labelledby="tab-bar">
       <div class="section-head reveal">
         <span class="kicker a">Bar &amp; Restauration</span>
         <h2>Une brasserie conviviale au cœur du jeu</h2>
         <p>On s'y retrouve entre amis ou en famille, autour de petites faims à partager — tapas, frites, paninis — ou simplement pour boire un verre après une bonne partie.</p>
       </div>
 
-      <div class="feature reveal">
+      <article class="feature reveal" id="brasserie" data-search-cat="bar" data-search-keys="brasserie restaurant resto manger bar boire tapas frites paninis">
         <div class="feature-body">
           <h3><em>Brasserie</em> & comptoir convivial</h3>
           <p>Notre espace brasserie se veut avant tout un endroit chaleureux et convivial. Des choses simples et gourmandes à partager, dans une ambiance détendue : l'arrêt parfait entre deux parties de bowling ou de laser game.</p>
           <ul class="tick-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Bar ouvert & restauration sur place</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Tapas, frites, paninis & petites faims</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Bar ouvert & restauration sur place</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Tapas, frites, paninis & petites faims</li>
           </ul>
         </div>
         <div class="feature-media">
@@ -634,155 +406,171 @@
             <rect width="800" height="600" fill="url(#bvig)"/>
           </svg>
         </div>
-      </div>
+      </article>
 
       <div class="grid reveal">
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+        <div class="card" data-search-cat="bar" data-search-keys="boissons bar verre">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
           <h3>Un verre entre amis</h3>
           <p>Boissons fraîches, ambiance décontractée : posez-vous au bar avant, pendant ou après le jeu.</p>
         </div>
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-3 5v6c0 1.1.9 2 2 2h1zm0 0v7"/></svg></div>
+        <div class="card" data-search-cat="bar" data-search-keys="manger restauration snack">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-3 5v6c0 1.1.9 2 2 2h1zm0 0v7"/></svg></div>
           <h3>Pause gourmande</h3>
           <p>Tapas, frites, paninis et autres petites faims pour reprendre des forces entre deux strikes.</p>
         </div>
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="card" data-search-cat="bar" data-search-keys="privatiser privatisation entreprise evenement retraite repas">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <h3>Privatisation</h3>
           <p>Départ en retraite, repas d'équipe, événement d'entreprise : privatisez le resto, on s'occupe du reste.</p>
-          <span class="card-link" onclick="showTab('contact')">Écrivez-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Écrivez-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
     </section>
 
     <!-- ===== OFFRES ===== -->
-    <section class="panel" id="offres" role="tabpanel">
+    <section class="panel" id="offres" role="tabpanel" aria-labelledby="tab-offres">
       <div class="section-head reveal">
         <span class="kicker c">Offres &amp; Bons plans</span>
         <h2>Des formules pour toutes les occasions</h2>
         <p>Chaque jour son bon plan, et des formules sur mesure pour les groupes et les entreprises. Réservation au 02 33 91 76 77.</p>
       </div>
 
+      <div class="filter-bar js-only reveal" role="group" aria-label="Filtrer les offres">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">Toutes</button>
+        <button type="button" class="filter" data-filter="today" aria-pressed="false">Aujourd'hui</button>
+        <button type="button" class="filter" data-filter="semaine" aria-pressed="false">Bons plans de la semaine</button>
+        <button type="button" class="filter" data-filter="entreprises" aria-pressed="false">Entreprises</button>
+        <button type="button" class="filter" data-filter="groupes" aria-pressed="false">Groupes</button>
+        <span class="filter-count" aria-live="polite"></span>
+      </div>
+      <p class="filter-empty" hidden>Pas de bon plan spécifique aujourd'hui — mais toutes nos formules restent disponibles. <button type="button" class="linklike" data-filter-reset>Voir toutes les offres</button></p>
+
       <!-- Bons plans de la semaine -->
-      <h3 class="block-title first reveal">Les bons plans de la semaine</h3>
-      <div class="grid reveal">
-        <div class="card promo">
-          <span class="day-tag">Lun – Jeu · 14h–17h</span>
-          <h3>Unlimited Bowl</h3>
-          <p>Bowling en illimité de 14h à 17h, à prix fixe. Enchaînez les parties autant que vous le souhaitez.</p>
-          <div class="deal-foot">
-            <div class="deal-price">15 €<small>de 14h à 17h, en illimité</small></div>
+      <div class="offer-group" data-group="semaine">
+        <h3 class="block-title first reveal">Les bons plans de la semaine</h3>
+        <div class="grid reveal">
+          <div class="card promo" data-days="1 2 3 4" data-search-cat="offres" data-search-keys="illimite unlimited lundi mardi mercredi jeudi apres-midi">
+            <span class="day-tag">Lun – Jeu · 14h–17h</span>
+            <h3>Unlimited Bowl</h3>
+            <p>Bowling en illimité de 14h à 17h, à prix fixe. Enchaînez les parties autant que vous le souhaitez.</p>
+            <div class="deal-foot">
+              <div class="deal-price">15 €<small>de 14h à 17h, en illimité</small></div>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Mardi</span>
-          <h3>Le mardi, tout permis</h3>
-          <p>Une partie achetée vous donne droit à une boisson offerte* ou à une seconde partie offerte. C'est vous qui choisissez votre bonus !</p>
-          <div class="deal-foot">
-            <div class="deal-price">1 = 1 offert<small>boisson ou partie</small></div>
+          <div class="card promo" data-days="2" data-search-cat="offres" data-search-keys="mardi boisson offerte partie offerte">
+            <span class="day-tag">Mardi</span>
+            <h3>Le mardi, tout permis</h3>
+            <p>Une partie achetée vous donne droit à une boisson offerte* ou à une seconde partie offerte. C'est vous qui choisissez votre bonus !</p>
+            <div class="deal-foot">
+              <div class="deal-price">1 = 1 offert<small>boisson ou partie</small></div>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Mercredi</span>
-          <h3>Mercredi Family Bowl</h3>
-          <p>Sortie en famille : une partie offerte** pour les enfants jusqu'à 10 ans qui accompagnent parents et grands-parents.</p>
-          <div class="deal-foot">
-            <div class="deal-price">Offert<small>une partie · enfant jusqu'à 10 ans</small></div>
+          <div class="card promo" data-days="3" data-search-cat="offres" data-search-keys="mercredi famille enfants grands-parents">
+            <span class="day-tag">Mercredi</span>
+            <h3>Mercredi Family Bowl</h3>
+            <p>Sortie en famille : une partie offerte** pour les enfants jusqu'à 10 ans qui accompagnent parents et grands-parents.</p>
+            <div class="deal-foot">
+              <div class="deal-price">Offert<small>une partie · enfant jusqu'à 10 ans</small></div>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Jeudi</span>
-          <h3>Jeudi Campus</h3>
-          <p>Le QG des étudiants : sur présentation de la carte étudiante, 1 € de moins sur tout, et la pinte à -2 €.</p>
-          <div class="deal-foot">
-            <div class="deal-price">-1 €<small>sur tout · pinte à -2 €</small></div>
+          <div class="card promo" data-days="4" data-search-cat="offres" data-search-keys="jeudi etudiant etudiants carte pinte biere">
+            <span class="day-tag">Jeudi</span>
+            <h3>Jeudi Campus</h3>
+            <p>Le QG des étudiants : sur présentation de la carte étudiante, 1 € de moins sur tout, et la pinte à -2 €.</p>
+            <div class="deal-foot">
+              <div class="deal-price">-1 €<small>sur tout · pinte à -2 €</small></div>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Vendredi soir</span>
-          <h3>Pizza Strike</h3>
-          <p>1 pizza + 1 boisson + 1 partie de bowling. Le food-truck pizza s'installe sur le parking : la soirée complète, au même endroit.</p>
-          <div class="deal-foot">
-            <div class="deal-price">20 €<small>pizza + boisson + partie</small></div>
+          <div class="card promo" data-days="5" data-search-cat="offres" data-search-keys="vendredi pizza food truck soiree">
+            <span class="day-tag">Vendredi soir</span>
+            <h3>Pizza Strike</h3>
+            <p>1 pizza + 1 boisson + 1 partie de bowling. Le food-truck pizza s'installe sur le parking : la soirée complète, au même endroit.</p>
+            <div class="deal-foot">
+              <div class="deal-price">20 €<small>pizza + boisson + partie</small></div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Entreprises & afterwork -->
-      <h3 class="block-title reveal">Pour les entreprises & l'afterwork</h3>
-      <div class="grid reveal">
-        <div class="card promo">
-          <span class="day-tag">17h30 – 19h30</span>
-          <h3>Afterwork collègues</h3>
-          <p>Une piste réservée pour 6 personnes, une planche apéro (charcuterie & fromage) et une girafe de bière ou deux bouteilles de vin. Le moment parfait après le boulot.</p>
-          <div class="deal-foot">
-            <div class="deal-price">90 €<small>tout compris · 6 personnes</small></div>
-            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <div class="offer-group" data-group="entreprises">
+        <h3 class="block-title reveal">Pour les entreprises & l'afterwork</h3>
+        <div class="grid reveal">
+          <div class="card promo" data-search-cat="offres" data-search-keys="afterwork collegues apero planche biere vin entreprise">
+            <span class="day-tag">17h30 – 19h30</span>
+            <h3>Afterwork collègues</h3>
+            <p>Une piste réservée pour 6 personnes, une planche apéro (charcuterie & fromage) et une girafe de bière ou deux bouteilles de vin. Le moment parfait après le boulot.</p>
+            <div class="deal-foot">
+              <div class="deal-price">90 €<small>tout compris · 6 personnes</small></div>
+              <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Chaque mois</span>
-          <h3>Challenge Inter-Entreprise</h3>
-          <p>Un tournoi mensuel entre entreprises locales. L'équipe gagnante remporte le trophée à remettre en jeu et un bon d'achat. La compétition amicale qui soude les équipes.</p>
-          <div class="deal-foot">
-            <div class="deal-price">Trophée<small>+ bon d'achat à gagner</small></div>
-            <span class="card-link" onclick="showTab('contact')">Inscrire mon équipe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <div class="card promo" data-search-cat="offres" data-search-keys="tournoi challenge entreprises trophee competition">
+            <span class="day-tag">Chaque mois</span>
+            <h3>Challenge Inter-Entreprise</h3>
+            <p>Un tournoi mensuel entre entreprises locales. L'équipe gagnante remporte le trophée à remettre en jeu et un bon d'achat. La compétition amicale qui soude les équipes.</p>
+            <div class="deal-foot">
+              <div class="deal-price">Trophée<small>+ bon d'achat à gagner</small></div>
+              <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Inscrire mon équipe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
           </div>
-        </div>
 
-        <div class="card promo">
-          <span class="day-tag">Sur mesure</span>
-          <h3>Entreprises & CE</h3>
-          <p>Séminaire, départ en retraite, team-building : privatisez tout ou partie du complexe et exposez-nous vos envies, on construit la formule avec vous.</p>
-          <div class="deal-foot">
-            <div class="deal-price">Sur devis<small>formule personnalisée</small></div>
-            <span class="card-link" onclick="showTab('contact')">Demander un devis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <div class="card promo" data-search-cat="offres" data-search-keys="ce comite seminaire team building devis privatiser">
+            <span class="day-tag">Sur mesure</span>
+            <h3>Entreprises & CE</h3>
+            <p>Séminaire, départ en retraite, team-building : privatisez tout ou partie du complexe et exposez-nous vos envies, on construit la formule avec vous.</p>
+            <div class="deal-foot">
+              <div class="deal-price">Sur devis<small>formule personnalisée</small></div>
+              <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Demander un devis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Événements & groupes -->
-      <h3 class="block-title reveal">Événements & groupes</h3>
-      <div class="grid reveal">
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
-          <h3>Anniversaires & Soirées</h3>
-          <p>Une formule clé en main pour fêter ça en grand, dès le plus jeune âge. Renseignez-vous sur nos parties offertes !</p>
-          <span class="card-link" onclick="showTab('contact')">Organiser <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 16.8 5.7 21.4 8 14 2 9.4h7.6z"/></svg></div>
-          <h3>EVJF & EVG</h3>
-          <p>Bowling, laser game, bar… tout est réuni pour un enterrement de vie de célibataire mémorable entre amis.</p>
-          <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/></svg></div>
-          <h3>Affiches & invitations</h3>
-          <p>Besoin d'une affiche ou de cartons d'invitation pour votre événement ? On vous donne un coup de pouce.</p>
-          <span class="card-link" onclick="showTab('contact')">Contactez-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <div class="offer-group" data-group="groupes">
+        <h3 class="block-title reveal">Événements & groupes</h3>
+        <div class="grid reveal">
+          <div class="card" data-search-cat="offres" data-search-keys="anniversaire soiree fete">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+            <h3>Anniversaires & Soirées</h3>
+            <p>Une formule clé en main pour fêter ça en grand, dès le plus jeune âge. Renseignez-vous sur nos parties offertes !</p>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Organiser <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="card" data-search-cat="offres" data-search-keys="evjf evg enterrement vie celibataire mariage">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 16.8 5.7 21.4 8 14 2 9.4h7.6z"/></svg></div>
+            <h3>EVJF & EVG</h3>
+            <p>Bowling, laser game, bar… tout est réuni pour un enterrement de vie de célibataire mémorable entre amis.</p>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="card" data-search-cat="offres" data-search-keys="affiche invitation carton">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/></svg></div>
+            <h3>Affiches & invitations</h3>
+            <p>Besoin d'une affiche ou de cartons d'invitation pour votre événement ? On vous donne un coup de pouce.</p>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Contactez-nous <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
         </div>
       </div>
 
-      <div class="anniv-cta reveal">
+      <div class="anniv-cta reveal practical" data-search-cat="infos" data-search-keys="cheques vacances ancv paiement payer moyens de paiement">
         <div class="perks">
-          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Nous acceptons les <b>Chèques Vacances ANCV</b></span></span>
-          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Une <b>partie offerte</b> pour les anniversaires</span></span>
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Nous acceptons les <b>Chèques Vacances ANCV</b></span></span>
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Une <b>partie offerte</b> pour les anniversaires</span></span>
         </div>
-        <a class="btn btn-primary" href="tel:+33233917677">Composer le 02 33 91 76 77
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-primary magnetic" href="tel:+33233917677">Composer le 02 33 91 76 77
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <p class="price-notes reveal" style="margin-top:18px">* La boisson offerte est un soft 25 cl ou une bière 25 cl. &nbsp;&nbsp; ** Offre non cumulable avec les anniversaires. &nbsp;&nbsp; Les offres ne sont pas cumulables entre elles.</p>
     </section>
 
     <!-- ===== ANNIVERSAIRES ===== -->
-    <section class="panel" id="anniv" role="tabpanel">
+    <section class="panel" id="anniv" role="tabpanel" aria-labelledby="tab-anniv">
       <div class="section-head reveal">
         <span class="kicker a">Anniversaires</span>
         <h2>On fête ça en grand !</h2>
@@ -790,65 +578,65 @@
       </div>
 
       <div class="grid reveal">
-        <div class="card promo">
+        <div class="card promo" data-search-cat="anniv" data-search-keys="anniversaire enfant bowling quilles formule">
           <span class="day-tag">Bowling</span>
           <h3>Formule Quilles</h3>
           <ul class="anniv-incl">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 2 parties de bowling</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Prêt de chaussures inclus</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 2 parties de bowling</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Prêt de chaussures inclus</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
           </ul>
           <div class="deal-foot">
             <div class="from-price"><em>dès</em> 14 €<span>par enfant</span></div>
-            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div>
 
-        <div class="card promo">
+        <div class="card promo" data-search-cat="anniv" data-search-keys="anniversaire enfant laser formule">
           <span class="day-tag">Laser Game</span>
           <h3>Formule Laser</h3>
           <ul class="anniv-incl">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 2 parties de laser game (2 × 20 min)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Équipement dernière génération</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 2 parties de laser game (2 × 20 min)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Équipement dernière génération</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
           </ul>
           <div class="deal-foot">
             <div class="from-price"><em>dès</em> 16 €<span>par enfant</span></div>
-            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div>
 
-        <div class="card promo">
+        <div class="card promo" data-search-cat="anniv" data-search-keys="anniversaire enfant strike bowling laser formule">
           <span class="day-tag">Bowling + Laser Game</span>
           <h3>Formule Strike</h3>
           <ul class="anniv-incl">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de bowling + prêt de chaussures</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de laser game (20 min)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de bowling + prêt de chaussures</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 1 partie de laser game (20 min)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 1 boisson offerte par enfant*</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Le cadeau du bowling</li>
           </ul>
           <div class="deal-foot">
             <div class="from-price"><em>dès</em> 18 €<span>par enfant</span></div>
-            <span class="card-link" onclick="showTab('contact')">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <a class="card-link" href="#contact" onclick="showTab('contact');return false;">Réserver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div>
       </div>
 
-      <div class="anniv-cta reveal">
+      <div class="anniv-cta reveal practical">
         <div class="perks">
-          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>Une <b>boisson offerte</b> à chaque enfant</span></span>
-          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1M2 21h20M7 8V5M12 8V5M17 8V5"/></svg><span>Espace convivial pour le <b>goûter</b></span></span>
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg><span>Une <b>boisson offerte</b> à chaque enfant</span></span>
+          <span class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1M2 21h20M7 8V5M12 8V5M17 8V5"/></svg><span>Espace convivial pour le <b>goûter</b></span></span>
         </div>
-        <a class="btn btn-primary" href="tel:+33233917677">Réserver au 02 33 91 76 77
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-primary magnetic" href="tel:+33233917677">Réserver au 02 33 91 76 77
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <p class="price-notes reveal" style="margin-top:18px">* Boisson offerte : soft uniquement. &nbsp; Formules à partir de 6 enfants, sur réservation. Vous pouvez apporter le gâteau. Tarifs établis sur la base de nos prix en vigueur — détails et personnalisation confirmés au moment de la réservation.</p>
+      <p class="price-notes reveal" style="margin-top:18px" data-search-cat="anniv" data-search-keys="conditions anniversaire gateau enfants minimum reservation">* Boisson offerte : soft uniquement. &nbsp; Formules à partir de 6 enfants, sur réservation. Vous pouvez apporter le gâteau. Tarifs établis sur la base de nos prix en vigueur — détails et personnalisation confirmés au moment de la réservation.</p>
     </section>
 
     <!-- ===== CONTACT ===== -->
-    <section class="panel" id="contact" role="tabpanel">
+    <section class="panel" id="contact" role="tabpanel" aria-labelledby="tab-contact">
       <div class="section-head reveal">
         <span class="kicker v">Contact</span>
         <h2>On vous attend à Granville</h2>
@@ -856,27 +644,27 @@
       </div>
 
       <div class="contact-grid">
-        <div class="reveal">
+        <div class="practical">
           <div class="info-stack">
-            <div class="info-card">
-              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ff2e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="info-card" id="contact-adresse" data-search-cat="infos" data-search-keys="adresse acces venir plan carte parking ou situe granville">
+              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
               <div><div class="label">Adresse</div><div class="val">511 rue du Conillot<br>50400 Granville</div></div>
             </div>
-            <div class="info-card">
-              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc24b" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="info-card" id="contact-tel" data-search-cat="infos" data-search-keys="telephone appeler numero reserver reservation">
+              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
               <div><div class="label">Téléphone</div><div class="val"><a href="tel:+33233917677">02 33 91 76 77</a></div></div>
             </div>
-            <div class="info-card">
-              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+            <div class="info-card" id="contact-email" data-search-cat="infos" data-search-keys="email mail courriel ecrire message">
+              <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
               <div><div class="label">Email</div><div class="val"><a href="mailto:contact@boulesetbilles.fun">contact@boulesetbilles.fun</a></div></div>
             </div>
-            <div class="hours">
-              <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Horaires d'ouverture</h4>
+            <div class="hours" id="contact-hours" data-search-cat="infos" data-search-keys="horaires heures ouverture ouvert ferme fermeture quand lundi mardi mercredi jeudi vendredi samedi dimanche">
+              <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Horaires d'ouverture</h4>
               <ul>
-                <li><span>Mardi – Jeudi</span><span>14h00 – 1h00</span></li>
-                <li><span>Vendredi – Samedi</span><span>14h00 – 2h00</span></li>
-                <li><span>Dimanche</span><span>14h00 – 0h00</span></li>
-                <li><span>Lundi (vac. scolaires)</span><span>14h00 – 19h00</span></li>
+                <li data-days="2 3 4"><span>Mardi – Jeudi</span><span>14h00 – 1h00</span></li>
+                <li data-days="5 6"><span>Vendredi – Samedi</span><span>14h00 – 2h00</span></li>
+                <li data-days="0"><span>Dimanche</span><span>14h00 – 0h00</span></li>
+                <li data-days="1"><span>Lundi (vac. scolaires)</span><span>14h00 – 19h00</span></li>
               </ul>
               <p class="note">Réservation conseillée pour la restauration, de 14h à minuit.</p>
             </div>
@@ -887,19 +675,19 @@
           <h3>Écrivez-nous</h3>
           <p class="sub">Réponse rapide pour vos réservations et événements.</p>
           <form onsubmit="return sendMail(event)">
-            <div class="field"><label for="cn">Votre nom</label><input id="cn" type="text" placeholder="Jean Dupont" required></div>
-            <div class="field"><label for="ce">Votre e-mail</label><input id="ce" type="email" placeholder="jean@email.com" required></div>
+            <div class="field"><label for="cn">Votre nom</label><input id="cn" type="text" placeholder="Jean Dupont" autocomplete="name" required></div>
+            <div class="field"><label for="ce">Votre e-mail</label><input id="ce" type="email" placeholder="jean@email.com" autocomplete="email" required></div>
             <div class="field"><label for="cs">Sujet</label><input id="cs" type="text" placeholder="Réservation anniversaire, devis groupe…"></div>
             <div class="field"><label for="cm">Votre message</label><textarea id="cm" rows="4" placeholder="Dites-nous tout…" required></textarea></div>
             <button class="btn btn-primary" type="submit">Envoyer le message
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
             </button>
             <p class="form-note">Le formulaire ouvre votre messagerie. Vous pouvez aussi appeler le 02 33 91 76 77.</p>
           </form>
         </div>
       </div>
 
-      <div class="map-wrap reveal">
+      <div class="map-wrap practical" id="contact-carte">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2181.4376527614295!2d-1.5621465847111033!3d48.84044917928576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480c053267c05bab%3A0x9fc40c314e3c9b0a!2s511+Rue+du+Conillot%2C+50400+Granville!5e1!3m2!1sfr!2sfr!4v1505728176507" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Boules et Billes Granville"></iframe>
       </div>
     </section>
@@ -913,40 +701,43 @@
     <div class="foot-top">
       <div class="foot-brand">
         <div class="brand">
-          <img class="brand-logo" src="https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png" alt="Boules et Billes" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img class="brand-logo" src="https://boulesetbilles.fun/wp-content/uploads/2018/11/cropped-bowling-de-Granville.png" alt="Boules et Billes" width="46" height="46" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="brand-fallback">B&amp;B</div>
           <div class="brand-txt"><span class="brand-name">BOULES <b>et</b> BILLES</span><span class="brand-sub">Granville</span></div>
         </div>
         <p>Le complexe de jeux de Granville : bowling, laser game, billard et brasserie. Le bon plan sortie, à deux pas du centre.</p>
       </div>
       <div class="foot-cols">
-        <div class="foot-col">
+        <nav class="foot-col" aria-label="Activités">
           <h5>Activités</h5>
-          <a onclick="showTab('activites')">Bowling</a>
-          <a onclick="showTab('activites')">Laser Game</a>
-          <a onclick="showTab('bar')">Bar & Resto</a>
-        </div>
-        <div class="foot-col">
+          <a href="#activites" onclick="showTab('activites');return false;">Bowling</a>
+          <a href="#activites" onclick="showTab('activites');return false;">Laser Game</a>
+          <a href="#bar" onclick="showTab('bar');return false;">Bar & Resto</a>
+        </nav>
+        <nav class="foot-col" aria-label="Infos">
           <h5>Infos</h5>
-          <a onclick="showTab('offres')">Nos offres</a>
-          <a onclick="showTab('anniv')">Anniversaires</a>
-          <a onclick="showTab('contact')">Contact</a>
+          <a href="#offres" onclick="showTab('offres');return false;">Nos offres</a>
+          <a href="#anniv" onclick="showTab('anniv');return false;">Anniversaires</a>
+          <a href="#contact" onclick="showTab('contact');return false;">Contact</a>
           <a href="tel:+33233917677">02 33 91 76 77</a>
           <a href="mailto:contact@boulesetbilles.fun">Écrivez-nous</a>
-        </div>
+        </nav>
         <div class="foot-col">
           <h5>Suivez-nous</h5>
           <div class="socials">
             <a href="https://www.facebook.com/boulesetbilles/" target="_blank" rel="noopener" aria-label="Facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
             <a href="mailto:contact@boulesetbilles.fun" aria-label="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
             </a>
             <a href="tel:+33233917677" aria-label="Téléphone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </a>
           </div>
+          <button type="button" class="motion-toggle js-only" id="motion-toggle" aria-pressed="false">
+            <span class="mt-dot" aria-hidden="true"></span><span class="mt-lbl">Désactiver l'animation 3D</span>
+          </button>
         </div>
       </div>
     </div>
@@ -958,51 +749,41 @@
   </div>
 </footer>
 
-<script>
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<!-- ============ MOBILE DOCK (infos à portée de pouce) ============ -->
+<nav class="dock js-only" aria-label="Accès rapide">
+  <a href="tel:+33233917677"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Appeler</a>
+  <button type="button" data-open-search aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Rechercher</button>
+  <a href="#contact" data-goto="contact-hours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horaires</a>
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=511+rue+du+Conillot+50400+Granville" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Itinéraire</a>
+</nav>
 
-  function runSheen(){
-    if(prefersReduced) return;
-    const bar = document.querySelector('.sheen-bar');
-    if(!bar || !bar.animate) return;
-    bar.getAnimations().forEach(a => a.cancel());
-    bar.animate([
-      {transform:'skewX(-16deg) translateX(-260%)', opacity:0},
-      {transform:'skewX(-16deg) translateX(-30%)',  opacity:1, offset:.5},
-      {transform:'skewX(-16deg) translateX(330%)',  opacity:0}
-    ], {duration:950, easing:'cubic-bezier(.16,1,.3,1)'});
-  }
+<!-- ============ SEARCH PALETTE ============ -->
+<div class="cmdk" id="search" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
+  <div class="cmdk-backdrop" data-close-search></div>
+  <div class="cmdk-panel">
+    <h2 class="sr-only" id="search-title">Recherche</h2>
+    <div class="cmdk-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="search-input" type="search" role="combobox" aria-expanded="true" aria-controls="search-results" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Horaires, tarifs, laser, anniversaire, adresse…">
+      <button type="button" class="kbd kbd-btn" data-close-search aria-label="Fermer la recherche">Échap</button>
+    </div>
+    <div class="cmdk-filters" role="group" aria-label="Filtrer les résultats">
+      <button type="button" data-scope="all" aria-pressed="true">Tout</button>
+      <button type="button" data-scope="infos" aria-pressed="false">Infos pratiques</button>
+      <button type="button" data-scope="tarifs" aria-pressed="false">Tarifs</button>
+      <button type="button" data-scope="activites" aria-pressed="false">Activités</button>
+      <button type="button" data-scope="offres" aria-pressed="false">Offres</button>
+      <button type="button" data-scope="anniv" aria-pressed="false">Anniversaires</button>
+      <button type="button" data-scope="bar" aria-pressed="false">Bar &amp; Resto</button>
+    </div>
+    <div class="cmdk-answer" id="search-answer" aria-live="polite"></div>
+    <ul class="cmdk-results" id="search-results" role="listbox" aria-label="Résultats"></ul>
+    <div class="cmdk-foot" aria-hidden="true"><span><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> naviguer</span><span><kbd class="kbd">↵</kbd> ouvrir</span><span><kbd class="kbd">Échap</kbd> fermer</span></div>
+  </div>
+</div>
 
-  function showTab(id){
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected','false'));
-    const panel = document.getElementById(id);
-    if(panel){
-      void panel.offsetWidth; /* restart entrance animation on every switch */
-      panel.classList.add('active');
-    }
-    const tab = document.querySelector('.tab[data-tab="'+id+'"]');
-    if(tab) tab.setAttribute('aria-selected','true');
-    runSheen();
-    const target = document.getElementById('panels');
-    const headerH = document.querySelector('header.nav').offsetHeight;
-    const y = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
-    window.scrollTo({top:y, behavior:'smooth'});
-  }
-
-  function sendMail(e){
-    e.preventDefault();
-    const name = document.getElementById('cn').value.trim();
-    const from = document.getElementById('ce').value.trim();
-    const subjRaw = document.getElementById('cs').value.trim() || 'Demande via le site';
-    const msg = document.getElementById('cm').value.trim();
-    const subject = encodeURIComponent(subjRaw + ' — ' + name);
-    const body = encodeURIComponent(msg + '\n\n— ' + name + '\n' + from);
-    window.location.href = 'mailto:contact@boulesetbilles.fun?subject=' + subject + '&body=' + body;
-    return false;
-  }
-
-  document.getElementById('yr').textContent = new Date().getFullYear();
-</script>
+<script src="assets/js/search.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+<script type="module" src="assets/js/experience.js"></script>
 </body>
 </html>
