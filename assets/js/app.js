@@ -116,7 +116,8 @@
   function scrollToEl(el, offset) {
     var headerH = $('header.nav').offsetHeight;
     var y = el.getBoundingClientRect().top + window.scrollY - headerH - (offset || 8);
-    window.scrollTo({ top: Math.max(0, y), behavior: motionOK() ? 'smooth' : 'auto' });
+    // always an instant jump: a smooth scroll would play the 3D film that sits above the content
+    window.scrollTo({ top: Math.max(0, y), behavior: 'instant' });
   }
 
   function showTab(id, opts) {
@@ -126,13 +127,7 @@
     var panel = document.getElementById(id);
     if (id !== prev || !panel.classList.contains('active')) {
       $$('.panel').forEach(function (p) { p.classList.remove('active', 'is-entering'); });
-      panel.classList.add('active');
-      if (motionOK()) {
-        $$('.reveal', panel).forEach(function (r, i) { r.style.setProperty('--i', i); });
-        void panel.offsetWidth;
-        panel.classList.add('is-entering');
-        clearTimeout(panel._t); panel._t = setTimeout(function () { panel.classList.remove('is-entering'); }, 1400);
-      }
+      panel.classList.add('active'); // instant switch: no entrance animation
     }
     current = id;
     tabs.forEach(function (t) {

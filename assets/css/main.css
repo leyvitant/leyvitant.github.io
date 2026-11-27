@@ -77,7 +77,7 @@
 
 /* ---------- 2. Base ---------- */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--header-h) + 12px)}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--header-h) + 12px)}
 body{
   background:var(--bg);
   color:var(--salt);
@@ -183,10 +183,14 @@ header.nav{
 .magnetic.is-pulled{transition:transform .12s linear,box-shadow var(--dur-2)}
 
 /* ---------- 5. Scroll experience (3D) ---------- */
-.xp{position:relative;height:520vh;background:#040506}
+.xp{position:relative;height:440vh;background:#040506}
+.xp-laser{height:470vh;background:#0b0518}
+.xp-laser .xp-poster{background:radial-gradient(60% 50% at 50% 35%,rgba(138,77,255,.3),transparent 70%),radial-gradient(40% 40% at 70% 70%,rgba(57,255,106,.15),transparent 70%),#0b0518}
+.xp.is-failed .xp-canvas{display:none}
+.xp.is-failed .xp-poster{opacity:1}
 .xp-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-#xp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s var(--ease-out)}
-.xp.is-ready #xp-canvas{opacity:1}
+.xp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s var(--ease-out)}
+.xp.is-ready .xp-canvas{opacity:1}
 .xp-poster{position:absolute;inset:0;opacity:.0;transition:opacity .8s;
   background:radial-gradient(60% 50% at 50% 30%,rgba(255,93,79,.18),transparent 70%),radial-gradient(50% 60% at 80% 90%,rgba(63,240,255,.12),transparent 70%),#050607}
 .xp:not(.is-ready) .xp-poster{opacity:1}
@@ -213,6 +217,9 @@ header.nav{
 .xp-giant{font-family:var(--f-display);font-weight:800;font-size:clamp(4.5rem,20vw,17rem);line-height:.85;letter-spacing:-.06em;color:#fff;
   text-shadow:0 0 30px rgba(255,93,79,.9),0 0 90px rgba(255,93,79,.55)}
 .xp-giant span{color:#7ff3ff;text-shadow:0 0 30px rgba(63,240,255,.9)}
+.xp-green{color:#eaffef;text-shadow:0 0 30px rgba(57,255,106,.95),0 0 90px rgba(57,255,106,.6)}
+.xp-green span{color:#ff2fd6;text-shadow:0 0 30px rgba(255,47,214,.9)}
+.xp-laser .xp-label{color:#9dffb8;text-shadow:0 0 18px rgba(57,255,106,.6)}
 .xp-photo{position:relative;width:clamp(160px,22vw,300px);aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 60px -20px rgba(0,0,0,.9),0 0 60px -20px rgba(255,93,79,.5);flex-shrink:0}
 .xp-photo .hero-bg{position:absolute;inset:0;background:url("https://boulesetbilles.fun/wp-content/uploads/2019/03/cropped-bowling-laser-game-granville-6-1024x614.jpg") center/cover no-repeat,linear-gradient(135deg,#2a1416,#0d1418)}
 .eyebrow{
@@ -287,9 +294,11 @@ header.nav{
 /* Static mode: reduced motion, no WebGL, or animation switched off */
 .xp-static .xp{height:auto}
 .xp-static .xp-sticky{position:relative;height:auto;overflow:visible;padding:clamp(40px,8vw,90px) 0 clamp(60px,8vw,100px)}
-.xp-static #xp-canvas{position:absolute;height:100vh;opacity:.55}
+.xp-static .xp-canvas{position:absolute;height:100vh;opacity:.4}
+.xp-static .xp-sticky::after{content:"";position:absolute;inset:0;height:100vh;background:linear-gradient(90deg,rgba(4,5,6,.85),rgba(4,5,6,.35) 70%);pointer-events:none}
+.xp-static .xp-chapters{z-index:1}
 .xp-static .xp-chapters{position:relative;display:grid;gap:clamp(48px,8vw,96px)}
-.xp-static .xp-ch{position:relative;inset:auto;bottom:auto;top:auto;translate:none;opacity:1;visibility:visible;transform:none;pointer-events:auto}
+.xp-static .xp-ch{position:relative;inset:auto;bottom:auto;top:auto;translate:none;opacity:1;visibility:visible;transform:none;pointer-events:auto;width:100%}
 .xp-static .xp-right{justify-items:start;text-align:left}
 .xp-static .xp-giant{font-size:clamp(3.5rem,12vw,8rem)}
 .xp-static .xp-hud{position:relative;padding-top:40px}
@@ -591,7 +600,8 @@ body.cmdk-open{overflow:hidden}
 }
 @media (max-width:900px){
   .brand-sub{display:none}
-  .xp{height:440vh}
+  .xp{height:360vh}
+  .xp-laser{height:380vh}
   .feature,.feature:nth-of-type(even){grid-template-columns:1fr;gap:24px}
   .feature:nth-of-type(even) .feature-media{order:0}
   .contact-grid{grid-template-columns:1fr}
@@ -660,7 +670,7 @@ body.cmdk-open{overflow:hidden}
 body.motion-off .marquee-track,body.motion-off .xp h1 .neon,body.motion-off .pulse{animation:none}
 
 @media print{
-  #xp-canvas,.xp-hud,.dock,.cmdk,.search-trigger,.marquee,.filter-bar,.motion-toggle{display:none!important}
+  .xp-canvas,.xp-hud,.dock,.cmdk,.search-trigger,.marquee,.filter-bar,.motion-toggle{display:none!important}
   .xp{height:auto!important}.xp-sticky{position:static!important;height:auto!important}.xp-ch{position:static!important;opacity:1!important;visibility:visible!important;transform:none!important;translate:none!important}
   .panel{display:block!important}
   body{background:#fff;color:#000}
